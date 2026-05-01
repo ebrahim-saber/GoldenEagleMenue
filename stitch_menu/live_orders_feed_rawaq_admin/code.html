@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rawaq Admin - Live Orders Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "surface-container": "#1e201f",
+                    "secondary-container": "#4a4949",
+                    "on-error-container": "#ffdad6",
+                    "error": "#ffb4ab",
+                    "outline": "#8a938c",
+                    "on-primary": "#003825",
+                    "background": "#121413",
+                    "tertiary-fixed-dim": "#e9c349",
+                    "secondary": "#c8c6c5",
+                    "on-secondary-fixed-variant": "#474646",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "primary-container": "#06402b",
+                    "inverse-on-surface": "#2f3130",
+                    "secondary-fixed": "#e5e2e1",
+                    "tertiary-fixed": "#ffe088",
+                    "tertiary-container": "#cba72f",
+                    "inverse-surface": "#e2e3e0",
+                    "outline-variant": "#404943",
+                    "on-background": "#e2e3e0",
+                    "on-error": "#690005",
+                    "on-tertiary": "#3c2f00",
+                    "surface": "#121413",
+                    "surface-bright": "#383a38",
+                    "surface-container-lowest": "#0d0f0e",
+                    "primary-fixed-dim": "#9cd2b5",
+                    "on-secondary": "#313030",
+                    "surface-tint": "#9cd2b5",
+                    "tertiary": "#e9c349",
+                    "on-surface-variant": "#c0c9c1",
+                    "primary": "#9cd2b5",
+                    "surface-container-high": "#282a29",
+                    "on-primary-fixed-variant": "#1b503a",
+                    "surface-dim": "#121413",
+                    "on-primary-container": "#77ac90",
+                    "on-surface": "#e2e3e0",
+                    "on-tertiary-container": "#4e3d00",
+                    "on-primary-fixed": "#002114",
+                    "surface-variant": "#333534",
+                    "on-tertiary-fixed": "#241a00",
+                    "surface-container-low": "#1a1c1b",
+                    "on-secondary-container": "#bab8b7",
+                    "primary-fixed": "#b8efd0",
+                    "inverse-primary": "#356850",
+                    "surface-container-highest": "#333534",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .order-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #404943; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary/30">
+<!-- SideNavBar (Authority: Shared Components JSON) -->
+<aside class="bg-[#121413] dark:bg-[#121413] h-screen w-64 fixed left-0 top-0 flex flex-col h-full py-8 space-y-4 font-manrope font-medium z-50">
+<div class="px-6 mb-8">
+<h1 class="text-2xl font-black text-[#e9c349]">Rawaq</h1>
+<p class="text-[0.7rem] uppercase tracking-[0.2em] text-gray-500 mt-1">Restaurant Management</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active Tab: Orders -->
+<a class="flex items-center px-6 py-3 space-x-3 text-[#e9c349] border-r-2 border-[#e9c349] bg-emerald-900/10 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="text-sm">Orders</span>
+</a>
+<a class="flex items-center px-6 py-3 space-x-3 text-gray-500 hover:text-emerald-200 hover:bg-emerald-900/5 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="text-sm">Menu</span>
+</a>
+<a class="flex items-center px-6 py-3 space-x-3 text-gray-500 hover:text-emerald-200 hover:bg-emerald-900/5 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm">Inventory</span>
+</a>
+<a class="flex items-center px-6 py-3 space-x-3 text-gray-500 hover:text-emerald-200 hover:bg-emerald-900/5 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+<span class="text-sm">Reports</span>
+</a>
+</nav>
+<div class="px-6 pt-4 border-t border-[#404943]/10">
+<button class="w-full bg-primary text-on-primary font-bold py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all hover:opacity-90 active:scale-95">
+<span class="material-symbols-outlined text-xl" data-icon="add">add</span>
+<span class="text-sm">New Order</span>
+</button>
+</div>
+<div class="px-6 mt-auto space-y-1">
+<a class="flex items-center py-2 space-x-3 text-gray-500 hover:text-emerald-200 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-sm">Support</span>
+</a>
+<a class="flex items-center py-2 space-x-3 text-gray-500 hover:text-emerald-200 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar (Authority: Shared Components JSON) -->
+<header class="w-full sticky top-0 z-40 bg-emerald-950/60 backdrop-blur-xl dark:bg-[#121413]/60 flex items-center justify-between px-6 py-3 border-b border-emerald-900/10 dark:border-[#404943]/15 shadow-sm font-manrope tracking-tight">
+<div class="flex items-center space-x-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-emerald-100/40" data-icon="search">search</span>
+<input class="w-full bg-emerald-900/20 border-none rounded-full pl-10 pr-4 py-2 text-sm text-emerald-100 placeholder-emerald-100/30 focus:ring-1 focus:ring-[#e9c349]" placeholder="Search table, order ID or items..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<div class="flex items-center space-x-2">
+<button class="p-2 text-emerald-100/70 hover:bg-emerald-900/40 transition-colors rounded-full relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-emerald-100/70 hover:bg-emerald-900/40 transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-emerald-900/20"></div>
+<div class="flex items-center space-x-3">
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface">Ahmed R.</p>
+<p class="text-[10px] text-primary">Floor Manager</p>
+</div>
+<img alt="Manager Profile" class="w-8 h-8 rounded-full border border-primary/20 object-cover" data-alt="Close-up portrait of a professional male restaurant manager in a dark uniform with soft ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJDZXnhS46NN-A2O0kA7gvQalm4SA6MYGFhf-HuVkFh1HJr6HOkh72J3LTUUmpP4MqMfLHSnIMcZHF7lduwYvxgasRiga87tagtsBuKOaU4H1T99gYL0aZ3kqYLFC24NxD_3KvAOCeynOMaz4kZ7KiOWVBEgLcmemjTq8W7SD1wRKKANhsToaOdlsLnWZiae_LGGbKJT9viwnwZ0C152NwrWPioSD0mZc9Z1RLlwRD2gWDnUi2_0LEjAI2cDWgLstCOY9KhfxrI-xM"/>
+</div>
+</div>
+</header>
+<!-- Live Orders Dashboard -->
+<section class="p-8">
+<div class="flex items-end justify-between mb-8">
+<div>
+<h2 class="text-4xl font-headline font-extrabold tracking-tighter text-on-surface">Live Orders</h2>
+<p class="text-on-surface-variant font-label text-sm mt-1">Real-time kitchen and floor sync</p>
+</div>
+<div class="flex space-x-4 bg-surface-container-low p-1 rounded-xl">
+<button class="px-6 py-2 text-sm font-semibold rounded-lg bg-surface-container-high text-[#e9c349]">All Orders (14)</button>
+<button class="px-6 py-2 text-sm font-semibold rounded-lg text-on-surface-variant hover:text-on-surface transition-colors">Preparing (6)</button>
+<button class="px-12 py-2 text-sm font-semibold rounded-lg text-on-surface-variant hover:text-on-surface transition-colors">Ready (3)</button>
+</div>
+</div>
+<div class="order-grid">
+<!-- Order Card 1: Pending & High Priority Notes -->
+<div class="group bg-surface-container-low p-6 rounded-xl border border-transparent hover:border-error/20 transition-all duration-300 relative overflow-hidden">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="text-3xl font-black text-[#e9c349]">T-12</span>
+<p class="text-xs font-label text-on-surface-variant mt-1">Order #4402 • 14:22</p>
+</div>
+<div class="px-3 py-1 bg-error/10 text-error rounded-full text-[10px] font-bold uppercase tracking-widest border border-error/20">
+                            Pending
+                        </div>
+</div>
+<div class="space-y-3 mb-6">
+<div class="flex justify-between items-center text-on-surface">
+<div class="flex items-center space-x-3">
+<span class="w-6 h-6 flex items-center justify-center bg-surface-container-highest rounded text-xs font-bold">2</span>
+<span class="text-sm font-medium">Wagyu Truffle Burger</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-on-surface">
+<div class="flex items-center space-x-3">
+<span class="w-6 h-6 flex items-center justify-center bg-surface-container-highest rounded text-xs font-bold">1</span>
+<span class="text-sm font-medium">Za'atar Roast Chicken</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-on-surface">
+<div class="flex items-center space-x-3">
+<span class="w-6 h-6 flex items-center justify-center bg-surface-container-highest rounded text-xs font-bold">3</span>
+<span class="text-sm font-medium">Sparkling Mineral Water</span>
+</div>
+</div>
+</div>
+<!-- Customer Notes: High Visibility Red -->
+<div class="bg-error-container/20 p-3 rounded-lg border-l-4 border-error mb-6">
+<div class="flex items-center space-x-2 text-error mb-1">
+<span class="material-symbols-outlined text-sm" data-icon="warning">warning</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Urgent Note</span>
+</div>
+<p class="text-sm text-on-error-container font-medium italic">Severe Nut Allergy - Cross-contamination protocol required.</p>
+</div>
+<div class="flex space-x-2">
+<button class="flex-1 bg-primary text-on-primary py-2 text-sm font-bold rounded-lg hover:opacity-90 transition-opacity">Prepare</button>
+<button class="w-12 h-10 flex items-center justify-center border border-outline-variant rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+</div>
+<!-- Order Card 2: Preparing & Customization -->
+<div class="group bg-surface-container-low p-6 rounded-xl border border-transparent hover:border-primary/20 transition-all duration-300 relative overflow-hidden">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="text-3xl font-black text-[#e9c349]">T-05</span>
+<p class="text-xs font-label text-on-surface-variant mt-1">Order #4405 • 14:15</p>
+</div>
+<div class="px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px] font-bold uppercase tracking-widest border border-primary/20">
+                            Preparing
+                        </div>
+</div>
+<div class="space-y-3 mb-6">
+<div class="flex justify-between items-center text-on-surface">
+<div class="flex items-center space-x-3">
+<span class="w-6 h-6 flex items-center justify-center bg-surface-container-highest rounded text-xs font-bold">1</span>
+<span class="text-sm font-medium">Pan-Seared Seabass</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-on-surface">
+<div class="flex items-center space-x-3">
+<span class="w-6 h-6 flex items-center justify-center bg-surface-container-highest rounded text-xs font-bold">2</span>
+<span class="text-sm font-medium">Saffron Infused Risotto</span>
+</div>
+</div>
+</div>
+<!-- Customer Notes: Visibility Yellow -->
+<div class="bg-tertiary/10 p-3 rounded-lg border-l-4 border-tertiary mb-6">
+<div class="flex items-center space-x-2 text-tertiary mb-1">
+<span class="material-symbols-outlined text-sm" data-icon="info">info</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Special Request</span>
+</div>
+<p class="text-sm text-tertiary font-medium italic">No cream in risotto if possible, substitute with olive oil.</p>
+</div>
+<div class="flex space-x-2">
+<button class="flex-1 bg-surface-container-high border border-outline-variant text-on-surface py-2 text-sm font-bold rounded-lg hover:bg-surface-variant transition-colors">Mark Ready</button>
+<button class="w-12 h-10 flex items-center justify-center border border-outline-variant rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined" data-icon="timer">timer</span>
+</button>
+</div>
+</div>
+<!-- Order Card 3: Ready for Delivery -->
+<div class="group bg-surface-container-low p-6 rounded-xl border border-transparent hover:border-[#e9c349]/20 transition-all duration-300 relative overflow-hidden">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="text-3xl font-black text-[#e9c349]">T-21</span>
+<p class="text-xs font-label text-on-surface-variant mt-1">Order #4398 • 14:02</p>
+</div>
+<div class="px-3 py-1 bg-tertiary/10 text-tertiary rounded-full text-[10px] font-bold uppercase tracking-widest border border-tertiary/20">
+                            Ready
+                        </div>
+</div>
+<div class="space-y-3 mb-6">
+<div class="flex justify-between items-center text-on-surface">
+<div class="flex items-center space-x-3">
+<span class="w-6 h-6 flex items-center justify-center bg-surface-container-highest rounded text-xs font-bold">4</span>
+<span class="text-sm font-medium">Classic Margarita </span>
+</div>
+</div>
+<div class="flex justify-between items-center text-on-surface">
+<div class="flex items-center space-x-3">
+<span class="w-6 h-6 flex items-center justify-center bg-surface-container-highest rounded text-xs font-bold">1</span>
+<span class="text-sm font-medium">Cheese Platter XL</span>
+</div>
+</div>
+</div>
+<!-- No Note State -->
+<div class="h-20 flex flex-col items-center justify-center text-on-surface-variant opacity-30 mb-6">
+<span class="material-symbols-outlined text-xl" data-icon="notes">notes</span>
+<span class="text-[10px] mt-1 uppercase tracking-widest">No Notes</span>
+</div>
+<div class="flex space-x-2">
+<button class="flex-1 bg-tertiary text-on-tertiary py-2 text-sm font-bold rounded-lg hover:opacity-90 transition-opacity">Serve Now</button>
+</div>
+</div>
+<!-- Order Card 4: Bento Style Detail Item -->
+<div class="group bg-surface-container-low p-6 rounded-xl border border-transparent hover:border-error/20 transition-all duration-300 flex flex-col">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="text-3xl font-black text-[#e9c349]">T-08</span>
+<p class="text-xs font-label text-on-surface-variant mt-1">Order #4410 • 14:30</p>
+</div>
+<div class="px-3 py-1 bg-error/10 text-error rounded-full text-[10px] font-bold uppercase tracking-widest border border-error/20">
+                            Pending
+                        </div>
+</div>
+<div class="space-y-3 mb-6 flex-1">
+<div class="flex justify-between items-center text-on-surface">
+<div class="flex items-center space-x-3">
+<span class="w-6 h-6 flex items-center justify-center bg-surface-container-highest rounded text-xs font-bold">2</span>
+<span class="text-sm font-medium">Signature Falafel Wrap</span>
+</div>
+</div>
+</div>
+<!-- Intense Red Note for high visibility -->
+<div class="bg-error-container p-4 rounded-lg mb-6">
+<p class="text-xs text-on-error-container font-black uppercase tracking-tighter mb-1">RUSH ORDER</p>
+<p class="text-sm text-on-error-container font-bold leading-tight">Customer has a flight in 45 mins. Prioritize delivery.</p>
+</div>
+<button class="w-full bg-primary text-on-primary py-2 text-sm font-bold rounded-lg hover:opacity-90">Accept Order</button>
+</div>
+<!-- Empty state visual placeholder -->
+<div class="border-2 border-dashed border-outline-variant/20 rounded-xl flex flex-col items-center justify-center p-8 opacity-40">
+<span class="material-symbols-outlined text-4xl mb-2" data-icon="hourglass_empty">hourglass_empty</span>
+<p class="text-xs font-label">Awaiting more orders...</p>
+</div>
+</div>
+</section>
+<!-- Kitchen Pulse/Stats (Bento Section) -->
+<section class="px-8 pb-12">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container p-6 rounded-xl">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-label text-on-surface-variant uppercase tracking-widest">Average Wait Time</span>
+<span class="material-symbols-outlined text-primary" data-icon="speed">speed</span>
+</div>
+<div class="text-3xl font-headline font-bold text-on-surface">18 <span class="text-sm font-normal text-on-surface-variant">min</span></div>
+<div class="mt-2 text-xs text-primary flex items-center">
+<span class="material-symbols-outlined text-xs mr-1" data-icon="trending_down">trending_down</span>
+<span>2 min faster than avg</span>
+</div>
+</div>
+<div class="bg-surface-container p-6 rounded-xl">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-label text-on-surface-variant uppercase tracking-widest">Total Sales (Today)</span>
+<span class="material-symbols-outlined text-[#e9c349]" data-icon="payments">payments</span>
+</div>
+<div class="text-3xl font-headline font-bold text-on-surface">$4,280.50</div>
+<div class="mt-2 text-xs text-on-surface-variant">84 Transactions processed</div>
+</div>
+<div class="bg-surface-container p-6 rounded-xl">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-label text-on-surface-variant uppercase tracking-widest">Kitchen Capacity</span>
+<span class="material-symbols-outlined text-error" data-icon="local_fire_department">local_fire_department</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full mt-4 overflow-hidden">
+<div class="bg-primary h-full w-[72%]"></div>
+</div>
+<div class="mt-4 flex justify-between items-center text-xs">
+<span class="text-on-surface">Heavy Load</span>
+<span class="text-primary font-bold">72%</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB: Quick Action (Authority: Shared Components Logic - Suppressed on Dashboard but we'll show a variant for "Add Order") -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-tertiary text-on-tertiary rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95 z-50">
+<span class="material-symbols-outlined text-2xl font-bold" data-icon="add">add</span>
+</button>
+</body></html>

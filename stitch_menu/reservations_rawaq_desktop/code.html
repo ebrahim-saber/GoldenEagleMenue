@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#e5e2e1",
+                    "inverse-on-surface": "#2f3130",
+                    "tertiary-container": "#cba72f",
+                    "tertiary-fixed": "#ffe088",
+                    "inverse-surface": "#e2e3e0",
+                    "outline-variant": "#404943",
+                    "surface": "#121413",
+                    "on-tertiary": "#3c2f00",
+                    "on-error": "#690005",
+                    "on-background": "#e2e3e0",
+                    "surface-bright": "#383a38",
+                    "surface-container": "#1e201f",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "on-error-container": "#ffdad6",
+                    "secondary-container": "#4a4949",
+                    "outline": "#8a938c",
+                    "error": "#ffb4ab",
+                    "background": "#121413",
+                    "on-primary": "#003825",
+                    "tertiary-fixed-dim": "#e9c349",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "on-secondary-fixed-variant": "#474646",
+                    "secondary": "#c8c6c5",
+                    "primary-container": "#06402b",
+                    "surface-dim": "#121413",
+                    "on-tertiary-container": "#4e3d00",
+                    "on-surface": "#e2e3e0",
+                    "on-primary-container": "#77ac90",
+                    "on-tertiary-fixed": "#241a00",
+                    "surface-variant": "#333534",
+                    "on-primary-fixed": "#002114",
+                    "surface-container-low": "#1a1c1b",
+                    "on-secondary-container": "#bab8b7",
+                    "primary-fixed": "#b8efd0",
+                    "surface-container-highest": "#333534",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "inverse-primary": "#356850",
+                    "error-container": "#93000a",
+                    "surface-container-lowest": "#0d0f0e",
+                    "primary-fixed-dim": "#9cd2b5",
+                    "tertiary": "#e9c349",
+                    "surface-tint": "#9cd2b5",
+                    "on-secondary": "#313030",
+                    "on-surface-variant": "#c0c9c1",
+                    "primary": "#9cd2b5",
+                    "surface-container-high": "#282a29",
+                    "on-primary-fixed-variant": "#1b503a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #121413; font-family: 'Manrope', sans-serif; color: #e2e3e0; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { background: rgba(18, 20, 19, 0.6); backdrop-filter: blur(24px); }
+        input:focus, textarea:focus { outline: none; border-color: #e9c349; }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+<!-- TopAppBar from JSON -->
+<nav class="bg-[#121413]/80 backdrop-blur-xl fixed top-0 w-full z-50 flex justify-between items-center px-8 h-20 w-full bg-gradient-to-b from-[#121413] to-transparent">
+<div class="text-2xl font-bold tracking-[-0.02em] text-[#e9c349]">Rawaq</div>
+<div class="hidden md:flex items-center space-x-10 font-manrope tracking-tighter text-sm uppercase">
+<a class="text-[#9cd2b5]/70 hover:text-[#e9c349] transition-colors duration-500" href="#">Explore</a>
+<a class="text-[#e9c349] font-bold" href="#">Reservations</a>
+<a class="text-[#9cd2b5]/70 hover:text-[#e9c349] transition-colors duration-500" href="#">Favorites</a>
+<a class="text-[#9cd2b5]/70 hover:text-[#e9c349] transition-colors duration-500" href="#">Profile</a>
+</div>
+<div class="flex items-center space-x-6 text-[#9cd2b5]">
+<span class="material-symbols-outlined hover:text-[#e9c349] cursor-pointer transition-colors">account_circle</span>
+<span class="material-symbols-outlined hover:text-[#e9c349] cursor-pointer transition-colors">notifications</span>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative h-[614px] flex items-center justify-center overflow-hidden">
+<img alt="Restaurant Hero" class="absolute inset-0 w-full h-full object-cover" data-alt="Luxurious dark restaurant interior with emerald velvet seating, dim warm ambient lighting, and elegant table settings at night" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2fH7zaK4lRaWK-6QIZJ1n4b5h0sVSFWjY-kYfiKFI7eYa33ivjlwSCnrO9aCPTCqHGNGH3P_ir1ywCTz0LAYXfyXxPTKLG14mO3Dsn3uAJIHlK1KTE0vtahwu_YmlW2s5TsADmyBiHtHY5gAuZIu_9VJr0mgOK6WXmYGRiylF5BtW069BAhvoM1dKGEP43-9n9lhurzVKC6mfXQk-uhCifDu2Ff11NYue_Ug7R5X7soHkfAvmORpnH6kHcufk8oXvT_M3DPjdZ11h"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+<div class="relative z-10 text-center px-4 max-w-4xl">
+<h1 class="text-5xl md:text-7xl font-headline font-extrabold tracking-[-0.03em] mb-4 text-on-surface">Secure Your Table</h1>
+<p class="text-lg md:text-xl font-body font-light text-on-surface-variant max-w-2xl mx-auto">An evening of refined culinary artistry awaits. Allow us to prepare a moment designed exclusively for you.</p>
+</div>
+</section>
+<!-- Booking Flow Container -->
+<section class="max-w-7xl mx-auto px-6 -mt-24 mb-32 relative z-20">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Reservation Settings -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Step 1: Date & Time -->
+<div class="bg-surface-container-low rounded-xl p-8 border border-outline-variant/15">
+<div class="flex items-center gap-4 mb-8">
+<span class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">1</span>
+<h2 class="text-2xl font-headline font-bold text-on-surface">Select Date &amp; Time</h2>
+</div>
+<div class="grid md:grid-cols-2 gap-12">
+<!-- Calendar Placeholder (Manual implementation) -->
+<div class="space-y-4">
+<div class="flex items-center justify-between px-2">
+<span class="text-primary font-bold">October 2023</span>
+<div class="flex gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-tertiary">chevron_left</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-tertiary">chevron_right</span>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-2 text-center text-[10px] text-outline uppercase tracking-widest mb-2">
+<div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+</div>
+<div class="grid grid-cols-7 gap-2">
+<!-- Days -->
+<div class="h-10 flex items-center justify-center text-outline/30">24</div>
+<div class="h-10 flex items-center justify-center text-outline/30">25</div>
+<div class="h-10 flex items-center justify-center text-outline/30">26</div>
+<div class="h-10 flex items-center justify-center text-outline/30">27</div>
+<div class="h-10 flex items-center justify-center text-outline/30">28</div>
+<div class="h-10 flex items-center justify-center text-outline/30">29</div>
+<div class="h-10 flex items-center justify-center text-on-surface cursor-pointer hover:bg-surface-container-highest rounded-lg transition-colors">1</div>
+<!-- ... Skipping some for brevity, focus on active -->
+<div class="h-10 flex items-center justify-center bg-primary text-on-primary rounded-lg font-bold shadow-lg shadow-primary/20">14</div>
+<div class="h-10 flex items-center justify-center text-on-surface cursor-pointer hover:bg-surface-container-highest rounded-lg transition-colors">15</div>
+<div class="h-10 flex items-center justify-center text-on-surface cursor-pointer hover:bg-surface-container-highest rounded-lg transition-colors">16</div>
+<div class="h-10 flex items-center justify-center text-on-surface cursor-pointer hover:bg-surface-container-highest rounded-lg transition-colors">17</div>
+<div class="h-10 flex items-center justify-center text-on-surface cursor-pointer hover:bg-surface-container-highest rounded-lg transition-colors">18</div>
+</div>
+</div>
+<!-- Time Slots -->
+<div class="space-y-6">
+<label class="text-sm font-label text-outline uppercase tracking-widest">Available Slots</label>
+<div class="grid grid-cols-2 gap-3">
+<button class="py-3 px-4 rounded-lg bg-surface-container-highest border border-outline-variant/30 text-on-surface hover:border-tertiary transition-all">18:30</button>
+<button class="py-3 px-4 rounded-lg bg-surface-container-highest border border-outline-variant/30 text-on-surface hover:border-tertiary transition-all">19:00</button>
+<button class="py-3 px-4 rounded-lg bg-primary text-on-primary border border-primary font-bold">19:30</button>
+<button class="py-3 px-4 rounded-lg bg-surface-container-highest border border-outline-variant/30 text-on-surface hover:border-tertiary transition-all">20:00</button>
+<button class="py-3 px-4 rounded-lg bg-surface-container-highest border border-outline-variant/30 text-on-surface hover:border-tertiary transition-all">20:30</button>
+<button class="py-3 px-4 rounded-lg bg-surface-container-highest border border-outline-variant/30 opacity-40 cursor-not-allowed">21:00</button>
+</div>
+<p class="text-xs text-outline italic">Times are shown in local restaurant time.</p>
+</div>
+</div>
+</div>
+<!-- Step 2: Guest Details -->
+<div class="bg-surface-container-low rounded-xl p-8 border border-outline-variant/15">
+<div class="flex items-center gap-4 mb-8">
+<span class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">2</span>
+<h2 class="text-2xl font-headline font-bold text-on-surface">Guest Details</h2>
+</div>
+<div class="space-y-8">
+<div class="flex flex-wrap gap-3">
+<label class="w-full text-sm font-label text-outline uppercase tracking-widest mb-1">Number of Guests</label>
+<button class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center border border-outline-variant/30 hover:border-tertiary">1</button>
+<button class="w-12 h-12 rounded-lg bg-primary text-on-primary flex items-center justify-center border border-primary font-bold shadow-lg shadow-primary/20">2</button>
+<button class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center border border-outline-variant/30 hover:border-tertiary">3</button>
+<button class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center border border-outline-variant/30 hover:border-tertiary">4</button>
+<button class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center border border-outline-variant/30 hover:border-tertiary">5</button>
+<button class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center border border-outline-variant/30 hover:border-tertiary">6</button>
+<button class="w-24 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center border border-outline-variant/30 hover:border-tertiary">10+</button>
+</div>
+<div class="grid md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-sm font-label text-on-surface-variant">Full Name</label>
+<input class="w-full bg-surface-container-highest border border-outline-variant/30 rounded-lg p-4 text-on-surface" placeholder="John Doe" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-label text-on-surface-variant">Email Address</label>
+<input class="w-full bg-surface-container-highest border border-outline-variant/30 rounded-lg p-4 text-on-surface" placeholder="john@example.com" type="email"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-label text-on-surface-variant">Phone Number</label>
+<input class="w-full bg-surface-container-highest border border-outline-variant/30 rounded-lg p-4 text-on-surface" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-label text-on-surface-variant">Occasion (Optional)</label>
+<select class="w-full bg-surface-container-highest border border-outline-variant/30 rounded-lg p-4 text-on-surface appearance-none">
+<option>Select occasion</option>
+<option>Birthday</option>
+<option>Anniversary</option>
+<option>Business Meeting</option>
+<option>Date Night</option>
+</select>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-label text-on-surface-variant">Special Requests &amp; Dietary Requirements</label>
+<textarea class="w-full bg-surface-container-highest border border-outline-variant/30 rounded-lg p-4 text-on-surface" placeholder="Allergies, seating preferences, or special notes..." rows="4"></textarea>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Summary Card -->
+<div class="lg:col-span-4">
+<div class="sticky top-28 space-y-6">
+<div class="bg-surface-container-high rounded-xl p-8 border border-tertiary/20 overflow-hidden relative">
+<div class="absolute top-0 left-0 w-1 h-full bg-tertiary"></div>
+<h3 class="text-xl font-headline font-extrabold text-tertiary mb-6 uppercase tracking-widest">Reservation Summary</h3>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<div>
+<p class="text-xs text-outline uppercase tracking-wider">Date</p>
+<p class="text-on-surface font-bold">Saturday, October 14, 2023</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<div>
+<p class="text-xs text-outline uppercase tracking-wider">Time</p>
+<p class="text-on-surface font-bold">19:30 (7:30 PM)</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">group</span>
+<div>
+<p class="text-xs text-outline uppercase tracking-wider">Guests</p>
+<p class="text-on-surface font-bold">2 Persons</p>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/20">
+<div class="flex justify-between items-center mb-6">
+<span class="text-on-surface-variant">Booking Deposit</span>
+<span class="text-tertiary font-bold">$0.00</span>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary font-extrabold rounded-lg hover:scale-[1.02] transition-transform active:scale-95 shadow-lg shadow-primary/20">
+                                        Confirm Reservation
+                                    </button>
+<p class="text-[10px] text-center mt-4 text-outline leading-relaxed">
+                                        By confirming, you agree to Rawaq's Cancellation Policy. No-shows may be subject to a courtesy fee.
+                                    </p>
+</div>
+</div>
+</div>
+<!-- Secondary Info -->
+<div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/15 flex items-center gap-4">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<p class="text-xs text-on-surface-variant">Elevate your experience with our <strong>Private Vault Dining</strong>. Available upon inquiry.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Area (Custom designed as a premium wrap-up) -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/10 py-20 px-8">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="md:col-span-2 space-y-6">
+<div class="text-3xl font-bold tracking-[-0.02em] text-[#e9c349]">Rawaq</div>
+<p class="text-on-surface-variant max-w-sm font-light leading-relaxed">
+                    A destination for those who appreciate the intersection of high culinary art and architectural elegance. Every detail is curated for an unforgettable journey.
+                </p>
+<div class="flex gap-6 text-primary">
+<span class="material-symbols-outlined cursor-pointer hover:text-tertiary transition-colors">public</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-tertiary transition-colors">share_reviews</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-tertiary transition-colors">mail</span>
+</div>
+</div>
+<div class="space-y-6">
+<h4 class="text-xs font-label text-outline uppercase tracking-[0.2em] font-bold">Experience</h4>
+<ul class="space-y-3 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">The Menu</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Private Events</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Wine Cellar</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Chef's Table</a></li>
+</ul>
+</div>
+<div class="space-y-6">
+<h4 class="text-xs font-label text-outline uppercase tracking-[0.2em] font-bold">Contact</h4>
+<p class="text-sm text-on-surface-variant font-light">1221 Emerald Heights, Suite 400<br/>Metropolis, NY 10001</p>
+<p class="text-sm text-primary font-bold tracking-tight">+1 (888) RAWAQ-VIP</p>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between text-[10px] text-outline uppercase tracking-widest">
+<p>© 2023 Rawaq Dining Group. All Rights Reserved.</p>
+<div class="flex gap-8 mt-4 md:mt-0">
+<a class="hover:text-on-surface transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-on-surface transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar from JSON (Suppressed for focused booking flow per instruction, but structure kept for potential mobile context) -->
+<nav class="md:hidden bg-[#121413]/60 backdrop-blur-lg fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-8 rounded-t-[24px] z-50 shadow-[0_-12px_32px_rgba(18,20,19,0.06)] border-none">
+<div class="flex flex-col items-center justify-center text-[#9cd2b5]/60 px-6 py-2 transition-all duration-300">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-manrope text-[10px] font-medium tracking-wide">Explore</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#9cd2b5]/10 text-[#e9c349] rounded-xl px-6 py-2 transition-all duration-300">
+<span class="material-symbols-outlined">event_available</span>
+<span class="font-manrope text-[10px] font-medium tracking-wide">Reservations</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#9cd2b5]/60 px-6 py-2 transition-all duration-300">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-manrope text-[10px] font-medium tracking-wide">Favorites</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#9cd2b5]/60 px-6 py-2 transition-all duration-300">
+<span class="material-symbols-outlined">person</span>
+<span class="font-manrope text-[10px] font-medium tracking-wide">Profile</span>
+</div>
+</nav>
+</body></html>

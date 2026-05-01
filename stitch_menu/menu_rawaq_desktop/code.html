@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;500;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#383a38",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "inverse-surface": "#e2e3e0",
+                    "on-primary-container": "#77ac90",
+                    "primary": "#9cd2b5",
+                    "on-secondary-fixed-variant": "#474646",
+                    "surface": "#121413",
+                    "error": "#ffb4ab",
+                    "tertiary": "#e9c349",
+                    "on-surface": "#e2e3e0",
+                    "secondary": "#c8c6c5",
+                    "primary-fixed-dim": "#9cd2b5",
+                    "surface-container-low": "#1a1c1b",
+                    "surface-container-high": "#282a29",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "inverse-on-surface": "#2f3130",
+                    "background": "#121413",
+                    "error-container": "#93000a",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-lowest": "#0d0f0e",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "tertiary-container": "#cba72f",
+                    "tertiary-fixed": "#ffe088",
+                    "surface-container-highest": "#333534",
+                    "on-error": "#690005",
+                    "on-background": "#e2e3e0",
+                    "on-primary-fixed-variant": "#1b503a",
+                    "outline-variant": "#404943",
+                    "surface-variant": "#333534",
+                    "on-secondary-container": "#bab8b7",
+                    "on-secondary": "#313030",
+                    "inverse-primary": "#356850",
+                    "primary-fixed": "#b8efd0",
+                    "surface-dim": "#121413",
+                    "primary-container": "#06402b",
+                    "surface-tint": "#9cd2b5",
+                    "on-tertiary-fixed": "#241a00",
+                    "outline": "#8a938c",
+                    "on-surface-variant": "#c0c9c1",
+                    "surface-container": "#1e201f",
+                    "on-tertiary": "#3c2f00",
+                    "secondary-container": "#4a4949",
+                    "tertiary-fixed-dim": "#e9c349",
+                    "on-tertiary-container": "#4e3d00",
+                    "on-primary-fixed": "#002114",
+                    "on-primary": "#003825",
+                    "secondary-fixed": "#e5e2e1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(18, 20, 19, 0.6);
+            backdrop-filter: blur(24px);
+        }
+        .scale-98-on-click-slow-ease:active {
+            transform: scale(0.98);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 selection:text-primary">
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#121413]/80 backdrop-blur-xl no-border background-shift-tonal">
+<div class="flex justify-between items-center px-12 py-6 w-full max-w-[1920px] mx-auto">
+<div class="text-2xl font-bold tracking-tighter text-[#e9c349]">Rawaq</div>
+<div class="hidden md:flex items-center space-x-12">
+<a class="font-['Manrope'] tracking-tight font-medium uppercase text-sm text-[#e9c349] border-b-2 border-[#e9c349] pb-1 transition-all duration-500 ease-in-out hover:opacity-80" href="#">Menu</a>
+<a class="font-['Manrope'] tracking-tight font-medium uppercase text-sm text-white/70 hover:text-white transition-all duration-500 ease-in-out hover:opacity-80" href="#">Reservations</a>
+<a class="font-['Manrope'] tracking-tight font-medium uppercase text-sm text-white/70 hover:text-white transition-all duration-500 ease-in-out hover:opacity-80" href="#">Private Dining</a>
+<a class="font-['Manrope'] tracking-tight font-medium uppercase text-sm text-white/70 hover:text-white transition-all duration-500 ease-in-out hover:opacity-80" href="#">Our Story</a>
+<a class="font-['Manrope'] tracking-tight font-medium uppercase text-sm text-white/70 hover:text-white transition-all duration-500 ease-in-out hover:opacity-80" href="#">Gallery</a>
+</div>
+<button class="bg-primary text-on-primary px-8 py-2.5 font-headline font-bold uppercase text-xs tracking-widest scale-98-on-click-slow-ease transition-all duration-300 hover:bg-primary/90">
+                Order Now
+            </button>
+</div>
+</nav>
+<!-- Main Content Layout -->
+<main class="pt-32 pb-24 px-12 max-w-[1920px] mx-auto flex flex-col lg:flex-row gap-16">
+<!-- Sidebar Navigation -->
+<aside class="lg:w-64 flex-shrink-0 lg:sticky lg:top-40 h-fit">
+<div class="space-y-12">
+<div>
+<h2 class="text-tertiary font-headline font-extrabold text-sm tracking-[0.2em] uppercase mb-8">Categories</h2>
+<ul class="space-y-6">
+<li>
+<a class="group flex items-center justify-between text-white/40 hover:text-primary transition-colors duration-300" href="#">
+<span class="font-headline font-medium text-lg tracking-tight">Appetizers</span>
+<span class="text-xs font-label opacity-0 group-hover:opacity-100 transition-opacity">08</span>
+</a>
+</li>
+<li>
+<a class="group flex items-center justify-between text-primary transition-colors duration-300" href="#">
+<span class="font-headline font-bold text-lg tracking-tight border-b border-primary/30 pb-1">Mains</span>
+<span class="text-xs font-label">12</span>
+</a>
+</li>
+<li>
+<a class="group flex items-center justify-between text-white/40 hover:text-primary transition-colors duration-300" href="#">
+<span class="font-headline font-medium text-lg tracking-tight">Drinks</span>
+<span class="text-xs font-label opacity-0 group-hover:opacity-100 transition-opacity">15</span>
+</a>
+</li>
+<li>
+<a class="group flex items-center justify-between text-white/40 hover:text-primary transition-colors duration-300" href="#">
+<span class="font-headline font-medium text-lg tracking-tight">Desserts</span>
+<span class="text-xs font-label opacity-0 group-hover:opacity-100 transition-opacity">06</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="p-8 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<p class="text-xs text-white/40 font-label leading-relaxed">
+                        Prices are inclusive of VAT. Please inform our Maître D’ of any allergies.
+                    </p>
+</div>
+</div>
+</aside>
+<!-- Menu Grid -->
+<section class="flex-grow">
+<header class="mb-16">
+<h1 class="text-5xl font-headline font-extrabold tracking-tighter text-on-surface mb-4">Mains</h1>
+<p class="text-on-surface-variant max-w-2xl font-light text-lg leading-relaxed">
+                    A curated selection of signature dishes, where traditional Levantine techniques meet modern culinary precision.
+                </p>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20">
+<!-- Menu Item Card 1 -->
+<div class="group">
+<div class="relative overflow-hidden rounded-xl mb-6 aspect-[4/5] bg-surface-container-low">
+<img alt="Grilled Lamb" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Gourmet grilled lamb chops presented on a dark slate plate with microgreens, pomegranates, and a glossy red wine reduction drizzle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwAoFk_bEv-C3hXxb9s5lGmVvWTXGgBIHYIai-Ejj0Z2OAvIL3J_mPnxG62JX_0ttFrpRaKID4WIXPA9Lsc5kJImW8jGL__Z_OtnkgSOFu3tLP9hpkvdR8P8kHEmbi0YVEB2r7zLfZ7YBjvjdej5mOBL5U_Xo-W-2xsDygS9EXWd6SMzPMjuJIk2iSGpxUYjeJKT9L55rkAYCPNRBdL5q1k_yjvBhxfPoxxbjE9Pmacz9yX679DRlByeo4osnzgv3pigWf_9MuTaZ7"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60"></div>
+<div class="absolute bottom-6 right-6">
+<span class="bg-tertiary text-on-tertiary px-4 py-1.5 text-sm font-bold tracking-tight rounded-sm">
+                                SAR 285
+                            </span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-start">
+<h3 class="text-2xl font-headline font-bold text-on-surface tracking-tight group-hover:text-primary transition-colors">Royal Lamb Shank</h3>
+</div>
+<p class="text-on-surface-variant font-light leading-relaxed">
+                            Slow-braised for twelve hours in a rich cardamom and saffron broth, served over smoked freekeh.
+                        </p>
+<div class="pt-2">
+<span class="text-[10px] uppercase tracking-widest text-tertiary font-bold mb-2 block">Ingredients</span>
+<p class="text-xs text-white/50 font-label">Australian Lamb, Iranian Saffron, Green Freekeh, Toasted Pine Nuts, Minted Yogurt.</p>
+</div>
+<button class="w-full mt-4 flex items-center justify-center space-x-3 border border-outline-variant/30 py-4 hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-300 group/btn">
+<span class="material-symbols-outlined text-sm">add</span>
+<span class="uppercase text-[11px] font-bold tracking-widest">Add to Order</span>
+</button>
+</div>
+</div>
+<!-- Menu Item Card 2 -->
+<div class="group">
+<div class="relative overflow-hidden rounded-xl mb-6 aspect-[4/5] bg-surface-container-low">
+<img alt="Seared Salmon" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Exquisitely seared salmon fillet atop a vibrant green pea purée, garnished with edible flowers and lemon foam in a high-end restaurant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvTJH4hp_eHbl7CZ-V3knBU5CyExwNarF1ggN5rw_h4uJNfcsA0h-tIbm1uUFUcfA0ri6YSCdaWmKNANz6KVEDyxredwGNVodngc4VDozJlrJMkk8XiIBqRANdCIvqCdvoR_81_l8BMk2icQvX0BIQt9NZnqhH61spSbLwOZswMq_C9Sl09WOnptt8GTpRAe7rMgAp3zbQQ1KeuAp2WGlG10eq9dE4-GbWrSnNu3DSxiReAVn59rB3Hbn4oNI0k_kyqu_h8GnVAcp8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60"></div>
+<div class="absolute bottom-6 right-6">
+<span class="bg-tertiary text-on-tertiary px-4 py-1.5 text-sm font-bold tracking-tight rounded-sm">
+                                SAR 240
+                            </span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-start">
+<h3 class="text-2xl font-headline font-bold text-on-surface tracking-tight group-hover:text-primary transition-colors">Zaffron Sea Bass</h3>
+</div>
+<p class="text-on-surface-variant font-light leading-relaxed">
+                            Pan-seared wild sea bass with a delicate citrus-saffron emulsion and charred asparagus spears.
+                        </p>
+<div class="pt-2">
+<span class="text-[10px] uppercase tracking-widest text-tertiary font-bold mb-2 block">Ingredients</span>
+<p class="text-xs text-white/50 font-label">Wild Sea Bass, Saffron Emulsion, Asparagus, Meyer Lemon, Heirloom Carrots.</p>
+</div>
+<button class="w-full mt-4 flex items-center justify-center space-x-3 border border-outline-variant/30 py-4 hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-300 group/btn">
+<span class="material-symbols-outlined text-sm">add</span>
+<span class="uppercase text-[11px] font-bold tracking-widest">Add to Order</span>
+</button>
+</div>
+</div>
+<!-- Menu Item Card 3 -->
+<div class="group">
+<div class="relative overflow-hidden rounded-xl mb-6 aspect-[4/5] bg-surface-container-low">
+<img alt="Wagyu Beef" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Thinly sliced A5 Wagyu beef steak served on a ceramic plate with sea salt flakes and roasted garlic bulbs, moody lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaa83BqEqc-k5dV5bvvCWCePmDBDj3eETN5DC29Mh7Hrx_agKWfOKkpESl0x-npxDQehz39X-rInxBfytEllfGMhFnCn5-dnIL3tIieERGQO_W10BDt7Vl-aNjJ7r7si2kSGvppSXUAKBShcsbPFGV_Dnl99PdWbeZLXDO5QMQKn2xMwC-RPuu4Jxev0iyplKF1dXqSe7taz5r8CIi0XEJEXhEVGqRbv_Cs6sJ-Cx6FEZVXZAE6O1y4xieniiWZiRlsGb_Qgvh1JtR"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60"></div>
+<div class="absolute bottom-6 right-6">
+<span class="bg-tertiary text-on-tertiary px-4 py-1.5 text-sm font-bold tracking-tight rounded-sm">
+                                SAR 450
+                            </span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-start">
+<h3 class="text-2xl font-headline font-bold text-on-surface tracking-tight group-hover:text-primary transition-colors">Wagyu Ribeye Tajine</h3>
+</div>
+<p class="text-on-surface-variant font-light leading-relaxed">
+                            A fusion masterpiece. Grade A5 Wagyu prepared with Moroccan spices, dried apricots, and honey.
+                        </p>
+<div class="pt-2">
+<span class="text-[10px] uppercase tracking-widest text-tertiary font-bold mb-2 block">Ingredients</span>
+<p class="text-xs text-white/50 font-label">A5 Wagyu Beef, Dried Apricots, Honey, Cumin, Cinnamon, Toasted Almonds.</p>
+</div>
+<button class="w-full mt-4 flex items-center justify-center space-x-3 border border-outline-variant/30 py-4 hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-300 group/btn">
+<span class="material-symbols-outlined text-sm">add</span>
+<span class="uppercase text-[11px] font-bold tracking-widest">Add to Order</span>
+</button>
+</div>
+</div>
+<!-- Menu Item Card 4 -->
+<div class="group">
+<div class="relative overflow-hidden rounded-xl mb-6 aspect-[4/5] bg-surface-container-low">
+<img alt="Truffle Risotto" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Creamy risotto topped with generous black truffle shavings and fresh herbs in a shallow bowl, elegant presentation" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqXzSaefBNqbnHL-0ULSj31XXhH5lbhdMEn6kpubOcmRgQpgixQYTPe7Pe5xNSyxblcQKfSqtPQLjYAlFv2cuK63z5bdr7vbvbQyLtGUlA1oSYhe-NAyipUDx9e_TJQpM1WBEmsylm6TF22Jv8C5dS89yGrbYFhDfUjPaV7YGLJvTwdF8Gahk5JyTG9zp0anhvnCkfVT2KgkpLH_zWb3RCfcu67mYbyZn1w6PTVW1KLhMnGhQY61AFA3UzjYpuxy45_lB_fqgMvi9N"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60"></div>
+<div class="absolute bottom-6 right-6">
+<span class="bg-tertiary text-on-tertiary px-4 py-1.5 text-sm font-bold tracking-tight rounded-sm">
+                                SAR 195
+                            </span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-start">
+<h3 class="text-2xl font-headline font-bold text-on-surface tracking-tight group-hover:text-primary transition-colors">Truffle Moutabel Pasta</h3>
+</div>
+<p class="text-on-surface-variant font-light leading-relaxed">
+                            Handmade tagliatelle tossed in a creamy roasted eggplant and black truffle sauce.
+                        </p>
+<div class="pt-2">
+<span class="text-[10px] uppercase tracking-widest text-tertiary font-bold mb-2 block">Ingredients</span>
+<p class="text-xs text-white/50 font-label">Durum Wheat Tagliatelle, Roasted Eggplant, Black Truffle, Parmigiano Reggiano.</p>
+</div>
+<button class="w-full mt-4 flex items-center justify-center space-x-3 border border-outline-variant/30 py-4 hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-300 group/btn">
+<span class="material-symbols-outlined text-sm">add</span>
+<span class="uppercase text-[11px] font-bold tracking-widest">Add to Order</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#121413] w-full py-16 border-t border-[#404943]/15 tonal-layering-surface-dim">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:flex lg:justify-between items-start px-12 max-w-[1920px] mx-auto">
+<div class="mb-12 lg:mb-0">
+<div class="text-[#e9c349] font-black text-2xl tracking-tighter mb-6">RAWAQ</div>
+<p class="text-white/40 font-['Manrope'] text-xs tracking-widest uppercase max-w-xs leading-relaxed">
+                    Experiential dining redefined through the lens of heritage and modernism.
+                </p>
+</div>
+<div class="grid grid-cols-2 gap-16">
+<div>
+<h4 class="text-white font-headline font-bold text-xs tracking-[0.2em] uppercase mb-8">Navigation</h4>
+<ul class="space-y-4">
+<li><a class="text-white/40 font-['Manrope'] text-xs tracking-widest uppercase hover:text-[#9cd2b5] transition-colors duration-300" href="#">Contact Us</a></li>
+<li><a class="text-white/40 font-['Manrope'] text-xs tracking-widest uppercase hover:text-[#9cd2b5] transition-colors duration-300" href="#">Sustainability</a></li>
+<li><a class="text-white/40 font-['Manrope'] text-xs tracking-widest uppercase hover:text-[#9cd2b5] transition-colors duration-300" href="#">Careers</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-headline font-bold text-xs tracking-[0.2em] uppercase mb-8">Legal</h4>
+<ul class="space-y-4">
+<li><a class="text-white/40 font-['Manrope'] text-xs tracking-widest uppercase hover:text-[#9cd2b5] transition-colors duration-300" href="#">Privacy Policy</a></li>
+<li><a class="text-white/40 font-['Manrope'] text-xs tracking-widest uppercase hover:text-[#9cd2b5] transition-colors duration-300" href="#">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-12 lg:mt-0">
+<p class="text-white/40 font-['Manrope'] text-xs tracking-widest uppercase">
+                    © 2024 Rawaq Fine Dining. All Rights Reserved.
+                </p>
+</div>
+</div>
+</footer>
+<!-- Floating Action Button for Cart (Minimalist) -->
+<div class="fixed bottom-12 right-12 z-40">
+<button class="bg-primary text-on-primary w-16 h-16 flex items-center justify-center rounded-full shadow-[0px_12px_32px_rgba(226,227,224,0.06)] hover:scale-110 transition-transform duration-500 group">
+<span class="material-symbols-outlined text-2xl">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-tertiary text-on-tertiary text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">3</span>
+</button>
+</div>
+</body></html>

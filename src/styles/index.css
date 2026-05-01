@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Inter:wght@400;500;600&family=Cinzel:wght@400;700&display=swap');
+
+@theme {
+  --color-primary: #9cd2b5;
+  --color-on-primary: #003825;
+  --color-primary-container: #06402b;
+  
+  --color-secondary: #c8c6c5;
+  --color-secondary-container: #4a4949;
+  
+  --color-tertiary: #e9c349;
+  --color-tertiary-container: #cba72f;
+  --color-on-tertiary: #3c2f00;
+
+  --color-surface: #121413;
+  --color-on-surface: #e2e3e0;
+  --color-on-surface-variant: #c0c9c1;
+  
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+
+  --color-surface-container-low: #1a1c1b;
+  --color-surface-container-high: #282a29;
+  --color-surface-container-highest: #333534;
+  
+  --font-headline: "Manrope", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Inter", sans-serif;
+
+  --radius-xl: 0.5rem;
+  --radius-2xl: 1rem;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-body selection:bg-primary/30 selection:text-primary min-h-screen;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer components {
+  .logo-font {
+    font-family: 'Cinzel', serif;
+    @apply tracking-widest uppercase;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    @apply inline-block align-middle leading-none;
+  }
+
+  .glass-header {
+    @apply bg-[#121413]/80 backdrop-blur-xl border-b border-white/5;
+  }
+
+  .glass-panel {
+    @apply bg-[#121413]/60 backdrop-blur-2xl border border-white/5;
+  }
+
+  .rawa-btn {
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-family: "Manrope", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    transition: all 0.3s;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .rawa-btn:active {
+    transform: scale(0.95);
+  }
+
+  .rawa-btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  .rawa-btn-primary:hover {
+    filter: brightness(0.9);
+  }
+
+  .rawa-btn-outline {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .rawa-btn-outline:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.text-gradient-gold {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#e9c349] via-[#ffe088] to-[#cba72f];
+}

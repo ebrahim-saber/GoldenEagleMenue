@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rawaq Admin | Inventory Sync</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Inter:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "surface-container": "#1e201f",
+                    "secondary-container": "#4a4949",
+                    "on-error-container": "#ffdad6",
+                    "error": "#ffb4ab",
+                    "outline": "#8a938c",
+                    "on-primary": "#003825",
+                    "background": "#121413",
+                    "tertiary-fixed-dim": "#e9c349",
+                    "secondary": "#c8c6c5",
+                    "on-secondary-fixed-variant": "#474646",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "primary-container": "#06402b",
+                    "inverse-on-surface": "#2f3130",
+                    "secondary-fixed": "#e5e2e1",
+                    "tertiary-fixed": "#ffe088",
+                    "tertiary-container": "#cba72f",
+                    "inverse-surface": "#e2e3e0",
+                    "outline-variant": "#404943",
+                    "on-background": "#e2e3e0",
+                    "on-error": "#690005",
+                    "on-tertiary": "#3c2f00",
+                    "surface": "#121413",
+                    "surface-bright": "#383a38",
+                    "surface-container-lowest": "#0d0f0e",
+                    "primary-fixed-dim": "#9cd2b5",
+                    "on-secondary": "#313030",
+                    "surface-tint": "#9cd2b5",
+                    "tertiary": "#e9c349",
+                    "on-surface-variant": "#c0c9c1",
+                    "primary": "#9cd2b5",
+                    "surface-container-high": "#282a29",
+                    "on-primary-fixed-variant": "#1b503a",
+                    "surface-dim": "#121413",
+                    "on-primary-container": "#77ac90",
+                    "on-surface": "#e2e3e0",
+                    "on-tertiary-container": "#4e3d00",
+                    "on-primary-fixed": "#002114",
+                    "surface-variant": "#333534",
+                    "on-tertiary-fixed": "#241a00",
+                    "surface-container-low": "#1a1c1b",
+                    "on-secondary-container": "#bab8b7",
+                    "primary-fixed": "#b8efd0",
+                    "inverse-primary": "#356850",
+                    "surface-container-highest": "#333534",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #121413;
+            color: #e2e3e0;
+            font-family: 'Manrope', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1a1c1b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #404943;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+<!-- SideNavBar Shell -->
+<aside class="bg-[#121413] dark:bg-[#121413] h-screen w-64 fixed left-0 top-0 flex flex-col h-full py-8 space-y-4 font-manrope font-medium z-40 overflow-y-auto">
+<div class="px-6 mb-8">
+<h1 class="text-2xl font-black text-[#e9c349] tracking-tighter">Rawaq</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-gray-500 mt-1">Restaurant Management</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 text-gray-500 hover:text-emerald-200 hover:bg-emerald-900/5 transition-all duration-300 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">receipt_long</span>
+<span>Orders</span>
+</a>
+<a class="flex items-center px-6 py-3 text-gray-500 hover:text-emerald-200 hover:bg-emerald-900/5 transition-all duration-300 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">restaurant_menu</span>
+<span>Menu</span>
+</a>
+<!-- Active Tab: Inventory -->
+<a class="flex items-center px-6 py-3 text-[#e9c349] border-r-2 border-[#e9c349] bg-emerald-900/10 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-xl" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center px-6 py-3 text-gray-500 hover:text-emerald-200 hover:bg-emerald-900/5 transition-all duration-300 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">bar_chart</span>
+<span>Reports</span>
+</a>
+</nav>
+<div class="px-6 pt-4">
+<button class="w-full py-3 px-4 bg-primary text-on-primary rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/10 hover:brightness-110 transition-all active:scale-95">
+<span class="material-symbols-outlined">add</span>
+                New Order
+            </button>
+</div>
+<div class="mt-auto space-y-1 pb-4">
+<a class="flex items-center px-6 py-3 text-gray-500 hover:text-emerald-200 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">help_outline</span>
+<span>Support</span>
+</a>
+<a class="flex items-center px-6 py-3 text-gray-500 hover:text-emerald-200 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 h-screen flex flex-col overflow-hidden relative bg-surface">
+<!-- TopNavBar Shell -->
+<header class="w-full sticky top-0 z-50 bg-emerald-950/60 backdrop-blur-xl dark:bg-[#121413]/60 flex items-center justify-between px-6 py-3 border-b border-emerald-900/10 dark:border-[#404943]/15 shadow-sm font-manrope tracking-tight">
+<div class="flex items-center flex-1">
+<div class="relative w-64 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-emerald-400/50 text-sm">search</span>
+<input class="w-full bg-emerald-900/10 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-[#e9c349] placeholder-emerald-100/30" placeholder="Search inventory..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-emerald-100/70 hover:bg-emerald-900/40 transition-colors rounded-full relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-emerald-100/70 hover:bg-emerald-900/40 transition-colors rounded-full">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-emerald-400/20">
+<img class="h-full w-full object-cover" data-alt="close-up portrait of a professional male restaurant manager in a dark suit with soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5_to7bTL9n-cgEYef1aq3nOk3PJnwr72DFo__xsTdAsBSPBNHGS7N19MIWZ7G4G-Zkn8Am0MLyPM6cOJhavxNH1olCrUCvwzaS3MskZw3dZBcPqaMZVhBArPMZzy3e48vDsM95dTrWq2kB_sz2ESc5-PeVbWe5RCPCchpyfCsvnOAKVVuwb7L4n6PEBQi437g6ejPZzpNpQxL0tQcIV0wWkwVi0pf6X9Pg8P3MpdrinQshYrpAj8J9gpIUMzvlH_imik7usLcbmEY"/>
+</div>
+</div>
+</header>
+<!-- Page Content: Inventory Sync Dashboard -->
+<section class="flex-1 overflow-y-auto custom-scrollbar p-8">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Dashboard Header -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-3xl font-headline font-bold tracking-tight text-on-surface">Inventory Sync</h2>
+<p class="text-on-surface-variant font-body mt-2">Real-time stock monitoring &amp; procurement forecasting.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 rounded-lg bg-surface-container-high text-on-surface border border-outline-variant/15 font-label text-xs hover:bg-surface-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">history</span>
+                            Restock Logs
+                        </button>
+<button class="px-4 py-2 rounded-lg bg-tertiary text-on-tertiary font-label text-xs font-bold hover:brightness-110 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">local_shipping</span>
+                            Order Ingredients
+                        </button>
+</div>
+</div>
+<!-- Bento Grid Key Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="md:col-span-2 bg-surface-container-low p-6 rounded-xl relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-4">
+<span class="p-2 bg-primary/10 rounded-lg text-primary material-symbols-outlined">trending_up</span>
+<span class="text-[10px] font-label text-primary bg-primary/10 px-2 py-0.5 rounded uppercase tracking-wider">+12% vs LY</span>
+</div>
+<h3 class="text-on-surface-variant text-sm font-label uppercase tracking-widest">Est. Order Volume</h3>
+<p class="text-4xl font-headline font-bold mt-2 text-on-surface">1,420 <span class="text-lg font-normal text-on-surface-variant">units/day</span></p>
+<p class="text-xs text-on-surface-variant mt-4 leading-relaxed">Based on last 7 days of service. Demand is peaking for organic produce.</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border-l-4 border-error/50">
+<h3 class="text-on-surface-variant text-sm font-label uppercase tracking-widest">Critical Shortage</h3>
+<p class="text-4xl font-headline font-bold mt-2 text-error">03</p>
+<p class="text-xs text-on-surface-variant mt-4">Immediate restock required for: Wagyu, Truffle, Sea Bass.</p>
+<div class="mt-4 flex gap-1">
+<div class="h-1 flex-1 bg-error rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-container-highest rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-container-highest rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl">
+<h3 class="text-on-surface-variant text-sm font-label uppercase tracking-widest">Low Stock Alerts</h3>
+<p class="text-4xl font-headline font-bold mt-2 text-tertiary">08</p>
+<p class="text-xs text-on-surface-variant mt-4">Forecasting depletion within 48 hours based on current velocity.</p>
+<div class="mt-4 flex gap-1">
+<div class="h-1 flex-1 bg-tertiary rounded-full"></div>
+<div class="h-1 flex-1 bg-tertiary rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-container-highest rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Main Inventory Table/List -->
+<div class="bg-surface-container-low rounded-xl overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant/10 flex items-center justify-between bg-surface-container-lowest/50">
+<h3 class="font-headline font-semibold text-lg">Ingredient Health Matrix</h3>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-[10px] font-label uppercase text-on-surface-variant">Optimal</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-[10px] font-label uppercase text-on-surface-variant">Low</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="text-[10px] font-label uppercase text-on-surface-variant">Alert</span>
+</div>
+</div>
+</div>
+<div class="divide-y divide-outline-variant/10">
+<!-- Inventory Row: Critical -->
+<div class="p-6 flex flex-col md:flex-row md:items-center gap-6 hover:bg-white/[0.02] transition-colors">
+<div class="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="close-up of fresh black truffle on dark background with dramatic spotlighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJwaVhxzQErmoE4hFz0s2tPFPm_j5yEtl6hK5dp8i-h9EBp5zGoHSWxd5Wm0QmmQb2ybWsUUSeNO5tFmYk3qMcp-L7zAMq8Oq1-p8pfpL2Vxb1B5GHoEQdY4pWSJatlRoOIjg36q5NGI8VWGCCpYQCkNoAthYHzX9hsskwLv2GAK7mMIkDPMFKTIvdUXf27mhJasWlvdbOKVlze2x64udObgBoEwV7aSoIC1Iq233qKs8-acv-T3ATMuRAjI513Nq3OMafFRmvpwEm"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline font-bold text-on-surface">Black Truffle (Périgord)</h4>
+<p class="text-xs text-on-surface-variant font-label mt-1">SKU: TRF-001 • Source: Regional Import</p>
+</div>
+<div class="w-full md:w-64 space-y-2">
+<div class="flex justify-between items-end text-[10px] font-label uppercase tracking-widest text-error">
+<span>Remaining: 120g</span>
+<span>4% Stock</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-error w-[4%]"></div>
+</div>
+</div>
+<div class="flex-1 text-center hidden md:block">
+<p class="text-xs text-on-surface-variant font-label uppercase">Daily Velocity</p>
+<p class="text-on-surface font-bold">42g <span class="text-error text-[10px]">↑ 12%</span></p>
+</div>
+<button class="bg-error/10 text-error px-4 py-2 rounded-lg font-label text-xs font-bold hover:bg-error/20 transition-colors shrink-0">
+                                REPLENISH NOW
+                            </button>
+</div>
+<!-- Inventory Row: Low -->
+<div class="p-6 flex flex-col md:flex-row md:items-center gap-6 hover:bg-white/[0.02] transition-colors">
+<div class="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="close-up of fresh raw wagyu beef steak with beautiful marbling on dark stone plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWT1UFHj3HwTyRgeRvly43dUoQOcE9a7PN0bYb4Rkm5G3Laj-1tu9kzkCkpFv_L1nilm88Plf7w2KOntNnAMGa7-lDUkwb8ASN8ZIEVzMJwrqNWnT5e9xnoXMBgbI2DzQkWS-NUi_bn6KRxRk5IlsVdvhmcb8B6q5diMFgeq5CtzTnoLndr_osy6YG9hsJDB06a3Ow0wC2QyqIpFQoya26ljdtWJ1sNUjkY30WAH3tj9g6eElY4RWo1J2dB-xeFoj-6fzNpdGwt_sM"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline font-bold text-on-surface">A5 Wagyu Ribeye</h4>
+<p class="text-xs text-on-surface-variant font-label mt-1">SKU: WGY-502 • Source: Kyoto Select</p>
+</div>
+<div class="w-full md:w-64 space-y-2">
+<div class="flex justify-between items-end text-[10px] font-label uppercase tracking-widest text-tertiary">
+<span>Remaining: 8.5kg</span>
+<span>22% Stock</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[22%]"></div>
+</div>
+</div>
+<div class="flex-1 text-center hidden md:block">
+<p class="text-xs text-on-surface-variant font-label uppercase">Daily Velocity</p>
+<p class="text-on-surface font-bold">4.1kg <span class="text-primary text-[10px]">↓ 3%</span></p>
+</div>
+<button class="bg-tertiary/10 text-tertiary px-4 py-2 rounded-lg font-label text-xs font-bold hover:bg-tertiary/20 transition-colors shrink-0">
+                                PRE-ORDER
+                            </button>
+</div>
+<!-- Inventory Row: Optimal -->
+<div class="p-6 flex flex-col md:flex-row md:items-center gap-6 hover:bg-white/[0.02] transition-colors">
+<div class="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="selection of fresh vibrant garden vegetables including carrots and greens in a rustic basket" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2m7IyCZMxfAo4J_QIwqs1LYOWyo4SbCrqpQkHaXZJ-Wri95g0a9oB2WY7PSLvPouHmth5AvJ1sFLQhDaouAfTyu7FLgAP32D-bgRRAc0UMAOb-M6wZ9ceLIlf0pOR3kTdp-ydt4br9SGeewaaMeXeWi-Ls-3_nMX0NX10KBZhfGiVJJTSXkGaPDgkHj72GyAn9RSUDl-PiZ3Ovz6fEAAonIKeJDmvG5Roe0QpPxTYVGoUgCaHg9_VLt46MrQfbZh4brH3Ok-QeJuJ"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline font-bold text-on-surface">Organic Garden Root Mix</h4>
+<p class="text-xs text-on-surface-variant font-label mt-1">SKU: VEG-990 • Source: Local Farm</p>
+</div>
+<div class="w-full md:w-64 space-y-2">
+<div class="flex justify-between items-end text-[10px] font-label uppercase tracking-widest text-primary">
+<span>Remaining: 45kg</span>
+<span>82% Stock</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[82%]"></div>
+</div>
+</div>
+<div class="flex-1 text-center hidden md:block">
+<p class="text-xs text-on-surface-variant font-label uppercase">Daily Velocity</p>
+<p class="text-on-surface font-bold">12kg <span class="text-primary text-[10px]">↑ 2%</span></p>
+</div>
+<button class="bg-surface-container-high text-on-surface-variant px-4 py-2 rounded-lg font-label text-xs font-bold hover:bg-surface-variant transition-colors shrink-0">
+                                MANAGE
+                            </button>
+</div>
+<!-- Inventory Row: Optimal 2 -->
+<div class="p-6 flex flex-col md:flex-row md:items-center gap-6 hover:bg-white/[0.02] transition-colors">
+<div class="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="vibrant green extra virgin olive oil being poured into a small glass bowl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL_vm2qyOym2YfONgekNhnxNvQOwi9QG63bQwYeLdgosKp0jjNAafhGQTfoVW2vPEZ4I8Y67UZzAZ8OSWRaECiT-EMPOsjBLxgA94cHAjXZNGuINjz03LxoKk_bQpwMtenMyvUIEw7QrtPrMILSGIMr3vta-qrbHFvmVOr13_R_xWACDyzXj8uegoxiwXFqSIr1CRV7k4XAs-wH09JyRxEecbBk1De7-PqQX5eM1HXoGPBD3XvoxBkTYW6AH29PgAtbOu9HYwurTXk"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline font-bold text-on-surface">Extra Virgin Olive Oil (Greek)</h4>
+<p class="text-xs text-on-surface-variant font-label mt-1">SKU: OIL-012 • Source: Crete Estate</p>
+</div>
+<div class="w-full md:w-64 space-y-2">
+<div class="flex justify-between items-end text-[10px] font-label uppercase tracking-widest text-primary">
+<span>Remaining: 18L</span>
+<span>65% Stock</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[65%]"></div>
+</div>
+</div>
+<div class="flex-1 text-center hidden md:block">
+<p class="text-xs text-on-surface-variant font-label uppercase">Daily Velocity</p>
+<p class="text-on-surface font-bold">1.2L <span class="text-on-surface-variant text-[10px]">− 0%</span></p>
+</div>
+<button class="bg-surface-container-high text-on-surface-variant px-4 py-2 rounded-lg font-label text-xs font-bold hover:bg-surface-variant transition-colors shrink-0">
+                                MANAGE
+                            </button>
+</div>
+</div>
+</div>
+<!-- Footer Stats/Trends -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-12">
+<div class="bg-surface-container-low rounded-xl p-6">
+<h4 class="font-headline font-bold text-on-surface mb-6">Inventory Waste Analysis</h4>
+<div class="flex items-end gap-2 h-32">
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[40%]"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm h-[65%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[30%]"></div>
+<div class="flex-1 bg-primary/60 rounded-t-sm h-[85%]"></div>
+<div class="flex-1 bg-tertiary rounded-t-sm h-[95%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[45%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[25%]"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-label text-on-surface-variant uppercase tracking-tighter">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span class="text-tertiary font-bold">Fri</span><span>Sat</span><span>Sun</span>
+</div>
+<p class="mt-6 text-sm text-on-surface-variant leading-relaxed">Waste spiked on Friday due to over-prep of garnish. Adjusting auto-order for next week by -15%.</p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-6 relative overflow-hidden flex flex-col justify-center border border-outline-variant/5">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
+<h4 class="font-headline font-bold text-on-surface mb-2">Automated Procurement</h4>
+<p class="text-on-surface-variant text-sm font-body leading-relaxed max-w-xs">Smart Sync is currently managing 42 items. Estimated savings this month:</p>
+<div class="mt-4 flex items-baseline gap-2">
+<span class="text-5xl font-headline font-black text-primary">$1,240</span>
+<span class="text-primary-fixed-dim font-label text-sm">/mo</span>
+</div>
+<div class="mt-8">
+<button class="w-full py-3 bg-primary-container text-primary rounded-lg font-label font-bold text-xs hover:brightness-125 transition-all">
+                                VIEW AI RECOMMENDATIONS
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Toast Notification (Simulated) -->
+<div class="fixed bottom-8 right-8 z-[60] bg-surface-container-highest border border-outline-variant/20 p-4 rounded-xl shadow-2xl flex items-center gap-4 animate-bounce-slow">
+<div class="w-10 h-10 rounded-full bg-error/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">Stock Alert</p>
+<p class="text-[10px] text-on-surface-variant">Black Truffle will be exhausted in 3 orders.</p>
+</div>
+<button class="text-tertiary font-label text-[10px] font-black uppercase hover:underline ml-4">Resolve</button>
+</div>
+</body></html>

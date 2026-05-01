@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#383a38",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "inverse-surface": "#e2e3e0",
+                        "on-primary-container": "#77ac90",
+                        "primary": "#9cd2b5",
+                        "on-secondary-fixed-variant": "#474646",
+                        "surface": "#121413",
+                        "error": "#ffb4ab",
+                        "tertiary": "#e9c349",
+                        "on-surface": "#e2e3e0",
+                        "secondary": "#c8c6c5",
+                        "primary-fixed-dim": "#9cd2b5",
+                        "surface-container-low": "#1a1c1b",
+                        "surface-container-high": "#282a29",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "inverse-on-surface": "#2f3130",
+                        "background": "#121413",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-lowest": "#0d0f0e",
+                        "on-tertiary-fixed-variant": "#574500",
+                        "tertiary-container": "#cba72f",
+                        "tertiary-fixed": "#ffe088",
+                        "surface-container-highest": "#333534",
+                        "on-error": "#690005",
+                        "on-background": "#e2e3e0",
+                        "on-primary-fixed-variant": "#1b503a",
+                        "outline-variant": "#404943",
+                        "surface-variant": "#333534",
+                        "on-secondary-container": "#bab8b7",
+                        "on-secondary": "#313030",
+                        "inverse-primary": "#356850",
+                        "primary-fixed": "#b8efd0",
+                        "surface-dim": "#121413",
+                        "primary-container": "#06402b",
+                        "surface-tint": "#9cd2b5",
+                        "on-tertiary-fixed": "#241a00",
+                        "outline": "#8a938c",
+                        "on-surface-variant": "#c0c9c1",
+                        "surface-container": "#1e201f",
+                        "on-tertiary": "#3c2f00",
+                        "secondary-container": "#4a4949",
+                        "tertiary-fixed-dim": "#e9c349",
+                        "on-tertiary-container": "#4e3d00",
+                        "on-primary-fixed": "#002114",
+                        "on-primary": "#003825",
+                        "secondary-fixed": "#e5e2e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(18, 20, 19, 0.6);
+            backdrop-filter: blur(24px);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-[#121413]/80 backdrop-blur-xl transition-all duration-500 ease-in-out hover:opacity-80">
+<div class="flex justify-between items-center px-12 py-6 w-full max-w-[1920px] mx-auto">
+<div class="text-2xl font-bold tracking-tighter text-[#e9c349] font-headline">Rawaq</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="font-['Manrope'] tracking-tight font-medium uppercase text-sm text-white/70 hover:text-white transition-colors" href="#">Menu</a>
+<a class="font-['Manrope'] tracking-tight font-medium uppercase text-sm text-white/70 hover:text-white transition-colors" href="#">Reservations</a>
+<a class="font-['Manrope'] tracking-tight font-medium uppercase text-sm text-white/70 hover:text-white transition-colors" href="#">Private Dining</a>
+<a class="font-['Manrope'] tracking-tight font-medium uppercase text-sm text-white/70 hover:text-white transition-colors" href="#">Our Story</a>
+<a class="font-['Manrope'] tracking-tight font-medium uppercase text-sm text-white/70 hover:text-white transition-colors" href="#">Gallery</a>
+</nav>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-white/70 hover:text-white" data-icon="search">search</button>
+<button class="bg-[#9cd2b5] text-[#003825] px-6 py-2.5 rounded-lg font-headline font-bold text-sm tracking-tight hover:scale-95 transition-transform active:scale-90">Order Now</button>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-24 px-6 md:px-12 max-w-[1920px] mx-auto min-h-screen">
+<div class="mb-12">
+<h1 class="text-4xl md:text-5xl font-headline font-bold tracking-tight text-white mb-2">Order Summary</h1>
+<p class="text-on-surface-variant font-body">Review your selection before proceeding to payment.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<!-- Left Column: Cart Items -->
+<div class="lg:col-span-8 space-y-8">
+<div class="space-y-6">
+<!-- Item 1 -->
+<div class="flex flex-col md:flex-row gap-6 p-6 bg-surface-container-low rounded-xl group transition-all duration-500 hover:bg-surface-container">
+<div class="w-full md:w-40 h-40 overflow-hidden rounded-xl bg-surface-container-highest">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Gourmet saffron infused rice dish with gold leaf garnish and roasted pistachios on a dark stone plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxgTvyBPGp7-7JaarlVceng7NNjhnlD0VScOUH0ZYNq67bE9ZAEPw9Awke9-QNHfPizLp_DKaJTbPX-P3hC29jgSK2QxaaJ8E7R3sscpdxpVb8UmYX3Rbmp1iNNRyp1au-_bAmV01M0SzrLb2r0OUCaaUk7sV0YQw13dbyKTXt2Q6ve8EJiToLEOzx4RUhrFArmnwSg4lNDfR52lZZpYvwvA0eEmMBsOri_6YOq3bKecfVYnkqaK0vEqsyDmqqdLL47YgtyR34p3xU"/>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-headline font-semibold text-white tracking-tight">Saffron Jeweled Pilaf</h3>
+<p class="text-on-surface-variant text-sm mt-1 max-w-md">Fragrant basmati, premium Iranian saffron, barberries, and toasted almond slivers.</p>
+</div>
+<span class="text-tertiary font-headline font-bold">45.00 SAR</span>
+</div>
+<div class="flex items-center justify-between mt-6">
+<div class="flex items-center bg-surface-container-highest rounded-lg px-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="px-4 font-label font-medium text-white">01</span>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="flex items-center gap-2 text-error text-sm font-label hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-sm">delete</span>
+                                    Remove
+                                </button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex flex-col md:flex-row gap-6 p-6 bg-surface-container-low rounded-xl group transition-all duration-500 hover:bg-surface-container">
+<div class="w-full md:w-40 h-40 overflow-hidden rounded-xl bg-surface-container-highest">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Slow roasted lamb shoulder with pomegranate molasses glaze and fresh herbs in a luxury restaurant setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUMXYEiPwIhRIk7M5YtQSk3zf43Ulz2omtSVzGo2fs1Va4Vea0tkhcEUQPoonQIEFR1rzhx_Nbl51V1fgQbcyqZ4ItnqYgrIYeC8TGdrmh2svSEbhB2d2-B5h-4fOIJFmrAVzYSH3Cy_1VWx0qikq-BrSiu5FT7z01Ji7yUbQHjxfzciOH7b3gefdRkAslP9gUQ9hI-FakUmwn4KsyGnnf_2vTwv5Bt3qtznpX695AusMYEN8SWAJzc_O2ycnGlIL1To499ABabaFE"/>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-headline font-semibold text-white tracking-tight">12-Hour Braised Lamb</h3>
+<p class="text-on-surface-variant text-sm mt-1 max-w-md">Slow-cooked tender shoulder with pomegranate glaze and mint-infused yogurt.</p>
+</div>
+<span class="text-tertiary font-headline font-bold">128.00 SAR</span>
+</div>
+<div class="flex items-center justify-between mt-6">
+<div class="flex items-center bg-surface-container-highest rounded-lg px-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="px-4 font-label font-medium text-white">01</span>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="flex items-center gap-2 text-error text-sm font-label hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-sm">delete</span>
+                                    Remove
+                                </button>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex flex-col md:flex-row gap-6 p-6 bg-surface-container-low rounded-xl group transition-all duration-500 hover:bg-surface-container">
+<div class="w-full md:w-40 h-40 overflow-hidden rounded-xl bg-surface-container-highest">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Artisanal sparkling water in a crystal glass with fresh lime and mint on a dark textured background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtqkfmEH7MSPw6YbSPSUGtNuR8wr8mQsi0rdpjXdP7Fk_gaIuu2cuTNd1fKzus5MosnNByF5S2GqaHY2hOE1CBGipbdX1bNOflrLxuQW4eoXWpTF5FtK6GX4-oG0WJRNKMAJbaDJbbxQgrD8v6_A7fBRF4sIQI0MzQ8unnS7kMbh5COeU3i6ntSSHbgwPmoIv2a_wqD2yg1sZZdVYioYUvWtk8qBZEuThYz3JBCbAsrz2dDkHqGSasf2gF8F9Nf8T4gHSpAubXZPRV"/>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-headline font-semibold text-white tracking-tight">Artisan Sparkling Water</h3>
+<p class="text-on-surface-variant text-sm mt-1 max-w-md">Premium mineral water with essence of Tahitian lime.</p>
+</div>
+<span class="text-tertiary font-headline font-bold">22.00 SAR</span>
+</div>
+<div class="flex items-center justify-between mt-6">
+<div class="flex items-center bg-surface-container-highest rounded-lg px-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="px-4 font-label font-medium text-white">02</span>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="flex items-center gap-2 text-error text-sm font-label hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-sm">delete</span>
+                                    Remove
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Add More Items / Special Instructions -->
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10">
+<label class="block text-white font-headline font-medium mb-4">Special Requests</label>
+<textarea class="w-full bg-surface-container-highest border-none rounded-lg p-4 text-on-surface placeholder:text-on-surface-variant/50 focus:ring-1 focus:ring-tertiary h-32 resize-none" placeholder="Allergies, seating preferences, or preparation notes..."></textarea>
+</div>
+</div>
+<!-- Right Column: Order Summary Details -->
+<div class="lg:col-span-4 sticky top-32">
+<div class="bg-surface-container-high p-8 rounded-2xl shadow-2xl">
+<h2 class="text-2xl font-headline font-bold text-white mb-8">Billing Summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-body">Subtotal</span>
+<span class="font-label text-white">217.00 SAR</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-body">Service Fee (10%)</span>
+<span class="font-label text-white">21.70 SAR</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-body">VAT (15%)</span>
+<span class="font-label text-white">32.55 SAR</span>
+</div>
+<div class="pt-4 border-t border-outline-variant/20 flex justify-between items-center">
+<span class="text-xl font-headline font-bold text-white uppercase tracking-wider">Total</span>
+<span class="text-2xl font-headline font-bold text-tertiary">271.25 SAR</span>
+</div>
+</div>
+<div class="space-y-4">
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-headline font-extrabold uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all shadow-lg shadow-primary/10">
+                            Pay at Counter (Offline)
+                        </button>
+<div class="flex items-center gap-3 p-4 bg-surface-container-highest rounded-xl border border-primary/20">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="text-xs text-on-primary-container leading-relaxed">
+                                Your order will be prepared immediately. Please present your digital ticket to the host upon arrival.
+                            </p>
+</div>
+<button class="w-full bg-transparent border border-outline-variant/30 text-on-surface-variant py-4 rounded-xl font-headline font-semibold hover:bg-surface-container-highest transition-colors">
+                            Continue Browsing Menu
+                        </button>
+</div>
+<div class="mt-8 flex justify-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant/30 text-4xl">payments</span>
+<span class="material-symbols-outlined text-on-surface-variant/30 text-4xl">contactless</span>
+<span class="material-symbols-outlined text-on-surface-variant/30 text-4xl">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-8 p-6 bg-surface-container-low rounded-xl border-l-4 border-tertiary">
+<p class="text-sm font-label text-[#e9c349]">
+<strong>Rawaq Loyalty:</strong> You will earn 27 points from this order.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#121413] w-full py-16 border-t border-[#404943]/15">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:flex lg:justify-between items-start px-12 max-w-[1920px] mx-auto">
+<div class="mb-12 lg:mb-0">
+<div class="text-[#e9c349] font-black text-2xl font-headline mb-4">RAWAQ</div>
+<p class="text-white/40 max-w-xs font-body text-sm leading-relaxed uppercase tracking-tight">
+                    Experience the pinnacle of fine dining where tradition meets contemporary elegance.
+                </p>
+</div>
+<div class="grid grid-cols-2 gap-12 lg:gap-24">
+<div class="flex flex-col gap-4">
+<span class="font-['Manrope'] text-xs tracking-widest uppercase text-[#9cd2b5] font-bold">Inquiry</span>
+<a class="font-['Manrope'] text-xs tracking-widest uppercase text-white/40 hover:text-[#9cd2b5] transition-colors" href="#">Contact Us</a>
+<a class="font-['Manrope'] text-xs tracking-widest uppercase text-white/40 hover:text-[#9cd2b5] transition-colors" href="#">Sustainability</a>
+<a class="font-['Manrope'] text-xs tracking-widest uppercase text-white/40 hover:text-[#9cd2b5] transition-colors" href="#">Careers</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-['Manrope'] text-xs tracking-widest uppercase text-[#9cd2b5] font-bold">Legal</span>
+<a class="font-['Manrope'] text-xs tracking-widest uppercase text-white/40 hover:text-[#9cd2b5] transition-colors" href="#">Privacy Policy</a>
+<a class="font-['Manrope'] text-xs tracking-widest uppercase text-white/40 hover:text-[#9cd2b5] transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+<div class="mt-12 lg:mt-0 flex flex-col items-end">
+<div class="flex gap-6 mb-8">
+<a class="text-white/40 hover:text-[#e9c349] transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-white/40 hover:text-[#e9c349] transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+<a class="text-white/40 hover:text-[#e9c349] transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+</div>
+<p class="font-['Manrope'] text-xs tracking-widest uppercase text-white/40">© 2024 Rawaq Fine Dining. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+</body></html>

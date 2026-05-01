@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;500;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-bright": "#383a38",
+            "secondary-fixed-dim": "#c8c6c5",
+            "inverse-surface": "#e2e3e0",
+            "on-primary-container": "#77ac90",
+            "primary": "#9cd2b5",
+            "on-secondary-fixed-variant": "#474646",
+            "surface": "#121413",
+            "error": "#ffb4ab",
+            "tertiary": "#e9c349",
+            "on-surface": "#e2e3e0",
+            "secondary": "#c8c6c5",
+            "primary-fixed-dim": "#9cd2b5",
+            "surface-container-low": "#1a1c1b",
+            "surface-container-high": "#282a29",
+            "on-secondary-fixed": "#1c1b1b",
+            "inverse-on-surface": "#2f3130",
+            "background": "#121413",
+            "error-container": "#93000a",
+            "on-error-container": "#ffdad6",
+            "surface-container-lowest": "#0d0f0e",
+            "on-tertiary-fixed-variant": "#574500",
+            "tertiary-container": "#cba72f",
+            "tertiary-fixed": "#ffe088",
+            "surface-container-highest": "#333534",
+            "on-error": "#690005",
+            "on-background": "#e2e3e0",
+            "on-primary-fixed-variant": "#1b503a",
+            "outline-variant": "#404943",
+            "surface-variant": "#333534",
+            "on-secondary-container": "#bab8b7",
+            "on-secondary": "#313030",
+            "inverse-primary": "#356850",
+            "primary-fixed": "#b8efd0",
+            "surface-dim": "#121413",
+            "primary-container": "#06402b",
+            "surface-tint": "#9cd2b5",
+            "on-tertiary-fixed": "#241a00",
+            "outline": "#8a938c",
+            "on-surface-variant": "#c0c9c1",
+            "surface-container": "#1e201f",
+            "on-tertiary": "#3c2f00",
+            "secondary-container": "#4a4949",
+            "tertiary-fixed-dim": "#e9c349",
+            "on-tertiary-container": "#4e3d00",
+            "on-primary-fixed": "#002114",
+            "on-primary": "#003825",
+            "secondary-fixed": "#e5e2e1"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "fontFamily": {
+            "headline": ["Manrope"],
+            "body": ["Manrope"],
+            "label": ["Inter"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .scale-98-on-click-slow-ease:active {
+      transform: scale(0.98);
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-primary">
+<!-- TopNavBar Implementation -->
+<nav class="fixed top-0 w-full z-50 bg-[#121413]/80 backdrop-blur-xl transition-all duration-500 ease-in-out">
+<div class="flex justify-between items-center px-12 py-6 w-full max-w-[1920px] mx-auto">
+<div class="text-2xl font-bold tracking-tighter text-[#e9c349] uppercase">Rawaq</div>
+<div class="hidden md:flex items-center gap-10 font-['Manrope'] tracking-tight font-medium uppercase text-sm">
+<a class="text-white/70 hover:text-white transition-all duration-500 ease-in-out hover:opacity-80" href="#">Menu</a>
+<a class="text-white/70 hover:text-white transition-all duration-500 ease-in-out hover:opacity-80" href="#">Reservations</a>
+<a class="text-white/70 hover:text-white transition-all duration-500 ease-in-out hover:opacity-80" href="#">Private Dining</a>
+<a class="text-white/70 hover:text-white transition-all duration-500 ease-in-out hover:opacity-80" href="#">Our Story</a>
+<a class="text-white/70 hover:text-white transition-all duration-500 ease-in-out hover:opacity-80" href="#">Gallery</a>
+</div>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-lg font-headline font-bold uppercase tracking-wider text-xs scale-98-on-click-slow-ease transition-all duration-300 hover:opacity-90">
+        Order Now
+      </button>
+</div>
+</nav>
+<main class="min-h-screen pt-32 pb-20 px-6 md:px-12 max-w-[1920px] mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+<!-- Hero Image Side -->
+<section class="sticky top-32">
+<div class="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-surface-container-low group">
+<img alt="Signature Dish" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" data-alt="Exquisite close-up of a slow-roasted wagyu beef tenderloin with truffle glaze and edible gold flakes on dark ceramic plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB23OL62kqvxbG2RxNtBhVIKrebU9ndyXgCZsQr81LUHtzLnh4IGuzdtDrSVtYdDALD8HtcXaWEhbIO_Wa_4nicKuQJm6WhckHTYRl1yIZ3gYa9Rvcy0INlPurUFrWmgL3KKJUabmYyuD-hKNT9lLNncYkA-No5D5xB4xWZWbtWfAvLqBOUBVETJgP5GgAigV92FlusS4mUdInm6pN2Z1eJ8iYnnWzTZEypD0vUGDHDyY99G98PFBD2XLe24MUxSnbU13QujlJKD8_g"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-40"></div>
+<div class="absolute top-8 left-8 flex flex-col gap-4">
+<span class="bg-surface/60 backdrop-blur-md text-tertiary px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-white/5">Signature</span>
+</div>
+</div>
+</section>
+<!-- Details & Customization Side -->
+<section class="flex flex-col gap-12 max-w-xl">
+<div class="space-y-6">
+<div class="space-y-2">
+<h1 class="text-5xl md:text-6xl font-headline font-extrabold tracking-tighter text-on-surface">
+              Gilded Wagyu <br/><span class="text-primary">&amp; Black Truffle</span>
+</h1>
+<div class="flex items-center gap-6">
+<span class="text-3xl font-light text-tertiary tracking-tight">$84.00</span>
+<div class="h-1 w-1 rounded-full bg-outline-variant/30"></div>
+<span class="text-on-surface-variant font-label text-sm uppercase tracking-[0.2em]">420 kcal</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-lg leading-relaxed font-light">
+            An masterpiece of culinary artistry. Australian Wagyu fillet, grade A5, sous-vide for 12 hours, finished with a Perigord black truffle emulsion and hand-applied 24k edible gold. Served with a side of silk-textured potato mousseline.
+          </p>
+</div>
+<!-- Customization Grid -->
+<div class="grid grid-cols-1 gap-10">
+<!-- Table Selection & Order Mode -->
+<div class="space-y-4">
+<label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant block">Table Preference</label>
+<div class="relative">
+<select class="w-full bg-surface-container-highest border-none rounded-lg py-4 px-6 text-on-surface appearance-none cursor-pointer focus:ring-2 focus:ring-tertiary transition-all">
+<option>Select Table Number</option>
+<option>Table 04 — Terrace North</option>
+<option>Table 09 — Garden View</option>
+<option>Table 12 — Private Alcove</option>
+<option>Table 22 — Main Hall</option>
+</select>
+<span class="material-symbols-outlined absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-tertiary">keyboard_arrow_down</span>
+</div>
+</div>
+<!-- Ingredients Toggle -->
+<div class="space-y-6">
+<div class="flex justify-between items-center border-b border-outline-variant/10 pb-4">
+<label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Adjust Ingredients</label>
+<span class="text-[10px] text-tertiary font-bold tracking-widest uppercase">Tap to remove</span>
+</div>
+<div class="flex flex-wrap gap-3">
+<!-- Selection Chips -->
+<button class="flex items-center gap-3 bg-primary-container text-on-primary-container px-5 py-3 rounded-full text-sm font-medium transition-all group hover:bg-primary-container/80">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Black Truffle</span>
+</button>
+<button class="flex items-center gap-3 bg-surface-container-highest text-on-surface-variant px-5 py-3 rounded-full text-sm font-medium transition-all hover:text-on-surface">
+<span class="material-symbols-outlined text-sm">circle</span>
+<span>Gold Leaf</span>
+</button>
+<button class="flex items-center gap-3 bg-primary-container text-on-primary-container px-5 py-3 rounded-full text-sm font-medium transition-all group">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Chives</span>
+</button>
+<button class="flex items-center gap-3 bg-primary-container text-on-primary-container px-5 py-3 rounded-full text-sm font-medium transition-all group">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Potato Mousseline</span>
+</button>
+</div>
+</div>
+<!-- Special Instructions -->
+<div class="space-y-4">
+<label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant block">Special Instructions</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-6 text-on-surface min-h-[140px] focus:ring-1 focus:ring-primary focus:border-primary transition-all placeholder:text-on-surface-variant/30 text-sm leading-relaxed" placeholder="Allergies, dietary preferences, or plating requests..."></textarea>
+</div>
+<!-- Actions -->
+<div class="pt-6 flex flex-col sm:flex-row gap-4">
+<div class="flex items-center bg-surface-container-high rounded-lg p-1 border border-outline-variant/10">
+<button class="w-12 h-12 flex items-center justify-center text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="w-12 text-center font-label font-bold text-lg">1</span>
+<button class="w-12 h-12 flex items-center justify-center text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<button class="flex-1 bg-primary text-on-primary font-headline font-extrabold uppercase tracking-[0.2em] py-5 rounded-lg text-sm shadow-xl shadow-primary/10 hover:shadow-primary/20 transition-all hover:translate-y-[-2px] scale-98-on-click-slow-ease">
+              Add to Order — $84.00
+            </button>
+</div>
+</div>
+</section>
+</div>
+<!-- Recommendations Section -->
+<section class="mt-40">
+<div class="flex flex-col gap-1 border-l-4 border-tertiary pl-8 mb-12">
+<span class="text-tertiary text-xs font-bold tracking-[0.3em] uppercase">The Sommelier Suggests</span>
+<h2 class="text-4xl font-headline font-extrabold tracking-tight">Perfect Pairings</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Pairing Card -->
+<div class="group bg-surface-container-low rounded-xl overflow-hidden transition-all duration-500 hover:bg-surface-container-high">
+<div class="aspect-video overflow-hidden">
+<img alt="Wine Pairing" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110" data-alt="Deep red vintage wine being poured into a crystal glass with soft bokeh candlelight in a cellar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe6_NzLk2HCzqgkqApIjNzLsahydGEUIbhoDKJHKaod9_YNnhm2cdIUPqSQolaq4jw8N1hXHrdD7QO9GHJ8d-VdC_OJFuPWmMz0EEwLW4j1zIjHP23fcrcJ-qQIZ3oBCCd1y0k8ONNrVOts8OtbYkagvUXm_2OnBs9Ro5-qc0uGUDwwb5j8ynhLQkbcOXeXWro807bR3rcFnoSM1TY2fgC5ywyb07khkc5S5mZbmZ5jzsck-HAVJuliVo3qPLkvAiztgvX_iXlOBDb"/>
+</div>
+<div class="p-8 space-y-4">
+<div class="flex justify-between items-start">
+<h3 class="text-xl font-bold font-headline leading-tight">2018 Estate Reserve <br/>Cabernet</h3>
+<span class="text-tertiary font-label text-sm">$22</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed font-light">Bold tannins and notes of dark cherry that complement the rich Wagyu marbling perfectly.</p>
+<button class="text-primary text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all">
+              Add to Pairing <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="group bg-surface-container-low rounded-xl overflow-hidden transition-all duration-500 hover:bg-surface-container-high">
+<div class="aspect-video overflow-hidden">
+<img alt="Side Dish" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110" data-alt="Artisanal cocktail with clear ice cube and citrus garnish in a dim luxury bar setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBliOfUSjxGJ0WJDYG6AF-6ffAKfdfR5KGteC_oUiilnpmxZy7P-hS1AFjedpmtbQ9lIASkRMoZ6gbRTpmkvn1bS_MWRV2W4sJ-F9JHdvDym9rwUg8AaMthVYaDJhrN2cQjwkxYnZfl7OxZFrVpD8F5mJJSP_xwRczkCRQjPQyXfWsGkG5FqZIeDqTsudH84EzyHyMlrVr2J_K180mwSFj8mk996kzjfEyKIUQIJkZsKFbcdnTX6x73nICMgoH7r_d5-1c1YClD-SXi"/>
+</div>
+<div class="p-8 space-y-4">
+<div class="flex justify-between items-start">
+<h3 class="text-xl font-bold font-headline leading-tight">Emerald <br/>Garden Side</h3>
+<span class="text-tertiary font-label text-sm">$18</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed font-light">Charred heirloom asparagus with a lemon-zest gremolata to cut through the richness.</p>
+<button class="text-primary text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all">
+              Add to Pairing <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="group bg-surface-container-low rounded-xl overflow-hidden transition-all duration-500 hover:bg-surface-container-high">
+<div class="aspect-video overflow-hidden">
+<img alt="Dessert Pairing" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110" data-alt="Decadent chocolate dessert with mirror glaze finish on a minimalist white plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX3I1OA8T_cj-KmJ30SHJlWeWXvy59TE9m56dpUF_BlkdItZAFnT777zIVoMK7EDXJCgfQba9mPI5PENeDvlFdTFX3eL7MLHdAUfmLk90Qj-dlRFhVBXgAWAZhT-a9RftfkGcdbE4xKmbOj7SiQtLm0sHNxEya0qcn4K_0Ikn1I2uoyQTOlbQ6Ejog1u3Wt5p5bWNH8slRIJTnB7IpduUHjNDBtSgKa4Z75BAWW8l1TwPdYGyL_vVAC5I7P64mu5KqpU_bIKx35ij3"/>
+</div>
+<div class="p-8 space-y-4">
+<div class="flex justify-between items-start">
+<h3 class="text-xl font-bold font-headline leading-tight">Dark Cacao <br/>Velvet</h3>
+<span class="text-tertiary font-label text-sm">$16</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed font-light">70% Tanzanian chocolate ganache with a hint of sea salt and espresso crema.</p>
+<button class="text-primary text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all">
+              Add to Pairing <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Implementation -->
+<footer class="w-full py-16 border-t border-[#404943]/15 bg-[#121413]">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:flex lg:justify-between items-start px-12 max-w-[1920px] mx-auto gap-12">
+<div class="space-y-6">
+<div class="text-[#e9c349] font-black text-3xl tracking-tighter uppercase">Rawaq</div>
+<p class="text-white/40 max-w-xs font-['Manrope'] text-xs leading-relaxed tracking-wider uppercase">Experience the pinnacle of culinary artistry and modern hospitality.</p>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-['Manrope'] text-xs tracking-widest uppercase text-[#9cd2b5] font-bold">Navigation</span>
+<nav class="flex flex-col gap-2">
+<a class="text-white/40 hover:text-[#9cd2b5] transition-colors duration-300 font-['Manrope'] text-xs tracking-widest uppercase" href="#">Contact Us</a>
+<a class="text-white/40 hover:text-[#9cd2b5] transition-colors duration-300 font-['Manrope'] text-xs tracking-widest uppercase" href="#">Sustainability</a>
+<a class="text-white/40 hover:text-[#9cd2b5] transition-colors duration-300 font-['Manrope'] text-xs tracking-widest uppercase" href="#">Careers</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-['Manrope'] text-xs tracking-widest uppercase text-[#9cd2b5] font-bold">Legal</span>
+<nav class="flex flex-col gap-2">
+<a class="text-white/40 hover:text-[#9cd2b5] transition-colors duration-300 font-['Manrope'] text-xs tracking-widest uppercase" href="#">Privacy Policy</a>
+<a class="text-white/40 hover:text-[#9cd2b5] transition-colors duration-300 font-['Manrope'] text-xs tracking-widest uppercase" href="#">Terms of Service</a>
+</nav>
+</div>
+<div class="flex flex-col gap-6 lg:items-end">
+<div class="flex gap-6">
+<a class="text-white/40 hover:text-[#e9c349] transition-all" href="#"><span class="material-symbols-outlined">brand_awareness</span></a>
+<a class="text-white/40 hover:text-[#e9c349] transition-all" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-white/40 hover:text-[#e9c349] transition-all" href="#"><span class="material-symbols-outlined">group</span></a>
+</div>
+<span class="text-white/40 font-['Manrope'] text-xs tracking-widest uppercase">© 2024 Rawaq Fine Dining. All Rights Reserved.</span>
+</div>
+</div>
+</footer>
+</body></html>
