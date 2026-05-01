@@ -2,20 +2,20 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'r
 import { CartProvider } from './context/CartContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { AuthProvider } from './context/AuthContext';
-import ProtectedRoute from './components/auth/ProtectedRoute';
-
 // Customer Pages
 import ScrollToTop from './components/common/ScrollToTop';
-import Home from './pages/Home';
-import ProductDetails from './pages/ProductDetails';
-import Checkout from './pages/Checkout';
+import Home from './features/menu/Home';
+import ProductDetails from './features/menu/ProductDetails';
+import Checkout from './features/orders/Checkout';
 import Reservations from './pages/Reservations';
 import PrivateDining from './pages/PrivateDining';
 import Gallery from './pages/Gallery';
 
 // Auth Pages
-import Login from './pages/Auth/Login';
-import Signup from './pages/Auth/Signup';
+import Login from './features/auth/Login';
+import Signup from './features/auth/Signup';
+import ProtectedRoute from './features/auth/ProtectedRoute';
+
 
 // Layouts
 import CustomerLayout from './components/layouts/CustomerLayout';
@@ -31,6 +31,9 @@ import AdminCategories from './pages/admin/AdminCategories';
 import AdminSettings from './pages/admin/AdminSettings';
 
 import './styles/index.css';
+
+import { SessionProvider } from './context/SessionContext';
+import StayDurationModal from './components/session/StayDurationModal';
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -102,8 +105,11 @@ function App() {
       <NotificationProvider>
         <CartProvider>
           <Router>
-            <ScrollToTop />
-            <AnimatedRoutes />
+            <SessionProvider>
+              <ScrollToTop />
+              <StayDurationModal />
+              <AnimatedRoutes />
+            </SessionProvider>
           </Router>
         </CartProvider>
       </NotificationProvider>
@@ -112,3 +118,4 @@ function App() {
 }
 
 export default App;
+

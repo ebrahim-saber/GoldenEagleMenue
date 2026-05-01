@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
-import FloatingCart from '../FloatingCart';
-import CartDrawer from '../CartDrawer';
+import FloatingCart from '../../features/cart/FloatingCart';
+import CartDrawer from '../../features/cart/CartDrawer';
 
 interface CustomerLayoutProps {
   children: React.ReactNode;

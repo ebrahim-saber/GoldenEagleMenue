@@ -1,34 +1,82 @@
-# RAWAQ | Imperial Dining SaaS
+# 🦅 Golden Eagle Smart Menue System
 
-Welcome to the **RAWAQ Dining Experience** — a professional, high-performance, and cinematic restaurant management and gallery system.
-
-## 🚀 Live Environment
-The project is currently running at:
-- **Localhost**: [http://localhost:5174/](http://localhost:5174/)
-
-## 🔐 Staff Portal Access
-To access the Admin Dashboard, use the following credentials:
-- **Email**: `leader@rawaq.com`
-- **Password**: `Admin123!` (If you haven't set one, use the "Continue with Google" option via your resort account).
-- **Admin Link**: [http://localhost:5174/admin](http://localhost:5174/admin)
-
-## 🛠️ Tech Stack
-- **Frontend**: React 18, TypeScript, Vite.
-- **Styling**: Tailwind CSS (Optimized for dark mode).
-- **Animations**: Framer Motion (Ceremonial transitions).
-- **Backend**: Supabase (Real-time DB + Auth).
-
-## ✨ Key Features
-1. **Cinematic Hero**: Visual storytelling with high-impact gold gradients.
-2. **Real-time Orders**: Kitchen dashboard with instant sync via Supabase.
-3. **Interactive Booking**: Bespoke reservation engine with success validation.
-4. **Visual Immersion**: Masonry gallery with full-screen lightbox controls.
-5. **Admin Intelligence**: Statistics dashboard with sparkline trend charts.
-
-## 📝 Developer Notes
-- Run `npm run dev` to start the local server.
-- Run `npm run build` to verify production stability (currently passing with 0 errors).
-- Ensure your Supabase environment variables in `.env` are active.
+نظام إدارة وطلب الطعام الذكي لمنتجع جولدن إيجل. نظام متكامل يربط الطاولات بالطلبات ويدير جلسات المستخدمين بدقة واحترافية.
 
 ---
-*Created with precision for the Rawaq Resort Collection.*
+
+## 🚀 المميزات الرئيسية (Core Features)
+
+### 1. نظام الطلب المرتبط بالطاولات (Table-Based Ordering)
+- يتم استخراج رقم الطاولة تلقائياً من خلال الـ QR Code الممسوح (عبر رابط `?table=ID`).
+- يتم ربط كل طلب يتم إرساله برقم الطاولة الصحيح لضمان دقة الخدمة.
+
+### 2. نظام التحقق من مدة الإقامة (Stay Duration Check)
+- **خطوة إجبارية**: لا يمكن الوصول للمنيو دون إدخال تاريخ الوصول والمغادرة.
+- **تاريخ الصلاحية**: تنتهي صلاحية الجلسة تلقائياً في يوم المغادرة تمام الساعة **12:00 PM**.
+- **الأمان**: يتم منع اليوزر من الطلب بعد انتهاء مدة الإقامة.
+
+### 3. سلة تسوق ذكية (Advanced Cart System)
+- إضافة وحذف الأطباق بسهولة.
+- التحكم في الكميات.
+- حساب إجمالي السعر شاملاً الضرائب ورسوم الخدمة.
+- حفظ السلة في `localStorage` لضمان عدم ضياعها عند تحديث الصفحة.
+
+### 4. واجهة مستخدم فاخرة (Premium UX/UI)
+- تصميم عصري (Dark Mode) بلمسات ذهبية وفضية.
+- أنيميشن سلس باستخدام `Framer Motion`.
+- نظام إشعارات (Notifications) للتفاعل مع المستخدم.
+- مودال (Modal) احترافي لإدخال البيانات الأساسية.
+
+---
+
+## 🏗️ هيكلة المشروع (Project Structure)
+
+تم تنظيم الكود بنظام **Feature-Based Architecture** لضمان سهولة التوسع والصيانة:
+
+```text
+src/
+├── components/          # المكونات العامة (Header, Footer, Modals)
+├── context/             # إدارة الحالة العامة (Auth, Session, Cart)
+├── features/            # الميزات الأساسية للنظام
+│   ├── menu/            # إدارة عرض المنيو وتفاصيل الأطباق
+│   ├── cart/            # نظام سلة المشتريات والـ Drawer
+│   ├── auth/            # نظام تسجيل الدخول والتحقق
+│   └── orders/          # صفحة الـ Checkout وإتمام الطلب
+├── hooks/               # الهوكس المخصصة (useRAWAQ, etc.)
+├── pages/               # الصفحات الأساسية (Home, Gallery, Reservations)
+├── lib/                 # الاتصال بـ Supabase والإعدادات
+└── styles/              # ملفات التنسيق و Tailwind Config
+```
+
+---
+
+## 💻 التقنيات المستخدمة (Tech Stack)
+
+- **React.js**: الإطار الأساسي للعمل.
+- **Tailwind CSS**: لتصميم الواجهات بمرونة عالية.
+- **Framer Motion**: للأنيميشن والحركات التفاعلية.
+- **Supabase**: لقاعدة البيانات ونظام المصادقة (Auth).
+- **Context API**: لإدارة حالة التطبيق عالمياً.
+
+---
+
+## 🛠️ كيفية التثبيت والتشغيل
+
+1. قم بتحميل المشروع:
+```bash
+git clone https://github.com/ebrahim-saber/GoldenEagleMenue.git
+```
+
+2. تثبيت المكتبات:
+```bash
+npm install
+```
+
+3. تشغيل المشروع:
+```bash
+npm run dev
+```
+
+---
+
+تم التطوير بكل فخر بواسطة **Senior React Developer & System Architect Team**. 🦅

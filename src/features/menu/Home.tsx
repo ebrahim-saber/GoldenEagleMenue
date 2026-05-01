@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRAWAQ } from '../hooks/useRAWAQ';
+import { useRAWAQ } from '../../hooks/useRAWAQ';
 import { Link } from 'react-router-dom';
 
 const Home = () => {

@@ -4,11 +4,14 @@ import { useAuth } from '../context/AuthContext';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useState } from 'react';
 import SearchOverlay from './SearchOverlay';
+import { useSession } from '../context/SessionContext';
 
 const Header = () => {
   const { totalItems, toggleCart } = useCart();
   const { user, signOut, isAdmin } = useAuth();
+  const { tableId } = useSession();
   const location = useLocation();
+
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -36,12 +39,21 @@ const Header = () => {
         className="fixed top-0 w-full z-50 transition-colors duration-500 border-b"
       >
         <div className="flex justify-between items-center px-8 md:px-12 py-6 w-full max-w-[1920px] mx-auto font-headline">
-          <Link to="/" className="flex flex-col group">
-            <span className="text-3xl font-black tracking-[0.25em] text-tertiary uppercase leading-none mb-1 transition-all group-hover:tracking-[0.3em]">
-              Rawaq
-            </span>
-            <div className="h-[2px] w-8 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link to="/" className="flex flex-col group">
+              <span className="text-3xl font-black tracking-[0.25em] text-tertiary uppercase leading-none mb-1 transition-all group-hover:tracking-[0.3em]">
+                Rawaq
+              </span>
+              <div className="h-[2px] w-8 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+            </Link>
+            {tableId && (
+              <div className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg hidden md:flex items-center gap-2">
+                <span className="material-symbols-outlined text-[10px] text-primary">restaurant</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Table {tableId}</span>
+              </div>
+            )}
+          </div>
+
           
           <nav className="hidden lg:flex items-center gap-10 tracking-tight font-medium uppercase text-sm">
             {navLinks.map((link) => (

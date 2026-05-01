@@ -1,16 +1,18 @@
-import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useRAWAQ } from '../hooks/useRAWAQ';
-import { useNotification } from '../context/NotificationContext';
+import { useAuth } from '../../context/AuthContext';
+import { useRAWAQ } from '../../hooks/useRAWAQ';
+import { useNotification } from '../../context/NotificationContext';
+import { useSession } from '../../context/SessionContext';
 
 const Checkout = () => {
   const { cart, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();
   const { showNotification } = useNotification();
   const { createOrder } = useRAWAQ();
   const { user } = useAuth();
+  const { tableId, stayDuration } = useSession();
   const navigate = useNavigate();
   const [instructions, setInstructions] = useState('');
 
@@ -25,6 +27,11 @@ const Checkout = () => {
       return;
     }
 
+    if (!stayDuration) {
+      showNotification('Stay duration is required.', 'error');
+      return;
+    }
+
     if (cart.length === 0) {
       showNotification('Selection empty. Please return to the menu.', 'error');
       return;
@@ -32,10 +39,12 @@ const Checkout = () => {
 
     try {
       const orderData = {
-        customer_id: user.id,
+        userId: user.id,
         customer_name: user.user_metadata.full_name || 'Guest',
         customer_phone: user.user_metadata.phone || 'N/A',
-        table_number: 'T-VIP', // Placeholder for actual selection
+        tableId: tableId || 'N/A',
+        arrivalDate: stayDuration.arrivalDate,
+        departureDate: stayDuration.departureDate,
         total_amount: finalTotal,
         note: instructions
       };
@@ -56,6 +65,7 @@ const Checkout = () => {
       showNotification('There was an error placing your order.', 'error');
     }
   };
+
 
   return (
     <div className="pt-16 pb-32 px-6 md:px-12 max-w-[1920px] mx-auto min-h-screen font-headline">

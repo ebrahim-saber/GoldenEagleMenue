@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useRAWAQ, type MenuItem } from '../hooks/useRAWAQ';
-import { useCart } from '../context/CartContext';
-import { useNotification } from '../context/NotificationContext';
+import { useRAWAQ, type MenuItem } from '../../hooks/useRAWAQ';
+import { useCart } from '../../context/CartContext';
+import { useNotification } from '../../context/NotificationContext';
 
 const ProductDetails = () => {
   const { id } = useParams();
