@@ -1,41 +1,67 @@
+import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
+
 const AdminHeader = () => {
+  const { user } = useAuth();
+  const { direction, toggleLanguage, language } = useLanguage();
+
   return (
-    <header className="w-full sticky top-0 z-40 bg-surface/60 backdrop-blur-xl flex items-center justify-between px-8 py-4 border-b border-white/5 font-headline" dir="rtl">
-      <div className="flex items-center space-x-4 flex-1">
-        <div className="relative w-full max-w-sm ml-4">
-          <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-white/20 text-sm">search</span>
+    <header className="w-full sticky top-0 z-40 bg-surface/80 backdrop-blur-xl flex items-center justify-between px-6 sm:px-8 py-3.5 border-b border-white/5 font-headline" dir={direction}>
+      {/* Search Input */}
+      <div className="flex items-center gap-4 flex-1">
+        <div className="relative w-full max-w-sm">
+          <span className={`material-symbols-outlined absolute top-1/2 -translate-y-1/2 text-white/30 text-sm pointer-events-none ${
+            direction === 'rtl' ? 'right-3.5' : 'left-3.5'
+          }`}>
+            search
+          </span>
           <input 
-            className="w-full bg-white/[0.03] border border-white/5 rounded-full pr-10 pl-4 py-2.5 text-xs text-white placeholder-white/20 focus:ring-1 focus:ring-tertiary transition-all" 
-            placeholder="بحث عن طاولة، طلب، أو صنف..." 
+            className={`w-full bg-white/5 border border-white/10 rounded-xl py-2 text-xs text-white placeholder-white/30 focus:border-tertiary outline-none transition-all ${
+              direction === 'rtl' ? 'pr-10 pl-4 text-right' : 'pl-10 pr-4 text-left'
+            }`} 
+            placeholder={language === 'ar' ? 'بحث عن طاولة، رقم طلب، أو صنف...' : 'Search table, order #, or dish...'} 
             type="text" 
           />
         </div>
       </div>
       
-      <div className="flex items-center space-x-6">
-        <div className="flex items-center space-x-3">
-          <button className="p-3 text-white/40 hover:text-white hover:bg-white/5 transition-all rounded-full relative group">
+      {/* Admin Profile & Actions */}
+      <div className="flex items-center gap-3 sm:gap-5">
+        {/* Language Toggle */}
+        <button
+          onClick={toggleLanguage}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-white transition-all"
+          title={language === 'en' ? 'التحويل إلى العربية' : 'Switch to English'}
+        >
+          <span className="material-symbols-outlined text-sm text-tertiary">language</span>
+          <span className="tracking-wider uppercase text-[11px]">
+            {language === 'en' ? 'العربية' : 'EN'}
+          </span>
+        </button>
+
+        <div className="flex items-center gap-2">
+          <button 
+            className="p-2 text-white/50 hover:text-white hover:bg-white/5 transition-all rounded-xl relative"
+            title={language === 'ar' ? 'الإشعارات' : 'Notifications'}
+          >
             <span className="material-symbols-outlined text-xl">notifications</span>
-            <span className="absolute top-3 left-3 w-1.5 h-1.5 bg-error rounded-full ring-2 ring-surface"></span>
-          </button>
-          <button className="p-3 text-white/40 hover:text-white hover:bg-white/5 transition-all rounded-full group">
-            <span className="material-symbols-outlined text-xl">settings</span>
+            <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full" />
           </button>
         </div>
         
-        <div className="h-10 w-[1px] bg-white/5 mx-6"></div>
+        <div className="h-6 w-[1px] bg-white/10 hidden sm:block" />
         
-        <div className="flex items-center space-x-4">
-          <div className="text-left hidden sm:block ml-4">
-            <p className="text-xs font-black text-white uppercase tracking-wider">إبراهيم س.</p>
-            <p className="text-[9px] text-primary uppercase font-bold tracking-[0.2em] mt-0.5">مدير النظام</p>
+        <div className="flex items-center gap-3">
+          <div className="hidden sm:block text-start">
+            <p className="text-xs font-bold text-white">
+              {user?.user_metadata?.full_name || (language === 'ar' ? 'مدير النظام' : 'Operations Director')}
+            </p>
+            <p className="text-[10px] text-tertiary font-bold tracking-wider">
+              {user?.email || 'admin@goldeneagle.com'}
+            </p>
           </div>
-          <div className="w-10 h-10 rounded-xl overflow-hidden border border-white/10 ring-2 ring-primary/20 shrink-0">
-            <img 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" 
-              alt="Profile" 
-              className="w-full h-full object-cover"
-            />
+          <div className="w-9 h-9 rounded-xl bg-tertiary/10 border border-tertiary/30 flex items-center justify-center text-tertiary font-black text-sm shrink-0">
+            {user?.user_metadata?.full_name?.[0] || 'A'}
           </div>
         </div>
       </div>

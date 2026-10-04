@@ -1,9 +1,17 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { useRAWAQ, type MenuItem } from '../../hooks/useRAWAQ';
+import {
+  useRAWAQ,
+  getDishName,
+  getDishDescription,
+  getDishIngredients,
+  getDishTag,
+  getDishCalories,
+  type MenuItem
+} from '../../hooks/useRAWAQ';
 import { useCart } from '../../context/CartContext';
 import { useNotification } from '../../context/NotificationContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -11,6 +19,7 @@ const ProductDetails = () => {
   const { addToCart, toggleCart } = useCart();
   const { showNotification } = useNotification();
   const { getMenuItem, menuItems } = useRAWAQ();
+  const { language, direction, t } = useLanguage();
   
   const [product, setProduct] = useState<MenuItem | null>(null);
   const [loading, setLoading] = useState(true);
@@ -25,39 +34,44 @@ const ProductDetails = () => {
       const data = await getMenuItem(id);
       if (data) {
         setProduct(data);
-        setSelectedIngredients(data.ingredients || []);
+        setSelectedIngredients(getDishIngredients(data, language));
       }
       setLoading(false);
     };
     fetchProduct();
-  }, [id, getMenuItem]);
+  }, [id, getMenuItem, language]);
 
-  // Compute related items reactively — avoids calling setState inside an effect
+  // Compute related items reactively
   const pairings = useMemo<MenuItem[]>(() => {
     if (!product || menuItems.length === 0) return [];
     return menuItems
-      .filter(item => item.id !== product.id && item.category === product.category)
+      .filter(item => item.id !== product.id)
       .slice(0, 3);
   }, [product, menuItems]);
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center text-white space-y-8 font-headline">
-        <p className="text-2xl font-light opacity-40 uppercase tracking-widest">Product not found</p>
-        <button onClick={() => navigate('/')} className="rawa-btn bg-white/5 border border-white/10 px-12 py-4 rounded-full uppercase text-xs font-bold tracking-widest hover:bg-white hover:text-surface transition-all">
-          Return to Menu
+      <div className="min-h-screen flex flex-col items-center justify-center text-white space-y-6 font-headline px-4 text-center">
+        <p className="text-xl font-bold opacity-60 uppercase tracking-widest">{t('details.not_found')}</p>
+        <button 
+          onClick={() => navigate('/')} 
+          className="bg-primary text-on-primary px-8 py-3 rounded-xl uppercase text-xs font-bold tracking-wider hover:brightness-110 transition-all"
+        >
+          {t('details.back')}
         </button>
       </div>
     );
   }
+
+  const localizedIngredients = getDishIngredients(product, language);
 
   const handleToggleIngredient = (ingredient: string) => {
     setSelectedIngredients(prev => 
@@ -69,242 +83,243 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     if (!product) return;
+    const name = getDishName(product, language);
     addToCart({
       id: product.id,
-      name: product.name,
+      name,
       price: product.price,
       image: product.image_url,
-      quantity: quantity,
+      quantity,
       customizations: {
         ingredients: selectedIngredients,
-        instructions: instructions
+        instructions
       }
     });
-    showNotification(`${product.name} added to your collection`, 'success');
+    showNotification(`"${name}" ${t('menu.added_notification')}`, 'success');
     toggleCart();
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0 
-    }
-  };
-
   return (
-    <motion.div 
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className="min-h-screen pt-12 pb-20 px-6 md:px-12 max-w-[1920px] mx-auto overflow-hidden"
-    >
-      {/* Editorial Navigation */}
-      <motion.nav variants={itemVariants} className="flex justify-between items-center mb-16 px-4">
+    <div className="min-h-screen pt-8 pb-16 px-4 sm:px-8 md:px-12 max-w-[1600px] mx-auto font-headline" dir={direction}>
+      {/* Top Breadcrumb & Navigation */}
+      <nav className="flex justify-between items-center mb-8 border-b border-white/5 pb-4">
         <button 
           onClick={() => navigate(-1)}
-          className="flex items-center gap-3 text-white/40 hover:text-white transition-all group"
+          className="flex items-center gap-2 text-white/50 hover:text-white transition-all text-xs font-bold uppercase tracking-wider group"
         >
-          <span className="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-2 font-light">arrow_back</span>
-          <span className="uppercase text-[10px] tracking-[0.3em] font-bold">Back to Collection</span>
+          <span className="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-1">
+            {direction === 'rtl' ? 'arrow_forward' : 'arrow_back'}
+          </span>
+          <span>{t('details.back')}</span>
         </button>
-        <div className="hidden md:flex gap-8 text-[10px] tracking-[0.3em] font-bold uppercase text-white/20">
-          <span>01 / Overview</span>
-          <span className="text-tertiary">02 / Customize</span>
-          <span>03 / Pairings</span>
+        <div className="hidden sm:flex gap-6 text-[11px] tracking-wider font-bold uppercase text-white/30">
+          <span className="text-tertiary">{t('details.step1')}</span>
+          <span>{t('details.step2')}</span>
+          <span>{t('details.step3')}</span>
         </div>
-      </motion.nav>
+      </nav>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1fr] gap-20 xl:gap-32 items-start">
-        {/* Immersive Image Sticky Section */}
-        <section className="lg:sticky lg:top-32 flex justify-center">
-          <motion.div 
-            variants={itemVariants}
-            className="relative aspect-square lg:aspect-[4/5] max-h-[60vh] lg:max-h-[75vh] w-full overflow-hidden rounded-2xl bg-[#121413] group shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]"
-          >
-            <motion.img 
-              initial={{ scale: 1.2 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
+      {/* Main Grid: Image Left, Controls Right */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
+        {/* Sticky Image Section */}
+        <section className="lg:col-span-6 lg:sticky lg:top-24">
+          <div className="relative aspect-[4/3] sm:aspect-[16/11] w-full overflow-hidden rounded-2xl bg-surface-container-low border border-white/10 shadow-2xl">
+            <img 
               src={product.image_url} 
-              alt={product.name}
+              alt={getDishName(product, language)}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background via-background/40 to-transparent opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80" />
             
-            <div className="absolute bottom-12 left-12 right-12 flex justify-between items-end">
-              <div className="space-y-4">
-                <span className="bg-tertiary text-on-tertiary px-6 py-2 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase">
-                  {product.tag || 'Royal Selection'}
+            <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+              <div className="space-y-2">
+                <span className="inline-block bg-tertiary text-on-tertiary px-3.5 py-1 rounded-full text-[10px] font-black tracking-wider uppercase shadow-md">
+                  {getDishTag(product, language)}
                 </span>
-                <div className="flex items-center gap-4 text-white/60">
-                  <span className="material-symbols-outlined text-sm font-light">nutrition</span>
-                  <span className="text-[10px] uppercase tracking-widest font-bold">{product.calories || '450 kCal'}</span>
-                </div>
+                {product.calories && (
+                  <div className="flex items-center gap-2 text-white/80 text-xs font-bold">
+                    <span className="material-symbols-outlined text-sm text-primary">local_fire_department</span>
+                    <span>{getDishCalories(product, language)}</span>
+                  </div>
+                )}
               </div>
             </div>
-          </motion.div>
+          </div>
         </section>
 
-        {/* Content Section */}
-        <section className="flex flex-col gap-16">
-          <div className="space-y-8">
-            <motion.header variants={itemVariants} className="space-y-4">
-              <div className="flex items-center gap-2 text-tertiary text-[10px] font-extrabold tracking-[0.4em] uppercase">
-                <span className="w-8 h-[1px] bg-tertiary"></span>
-                <span>The Experience</span>
-              </div>
-              <h1 className="text-6xl md:text-8xl font-headline font-extrabold tracking-tighter text-on-surface leading-[0.85] uppercase">
-                {product.name}
-              </h1>
-            </motion.header>
-            
-            <motion.div variants={itemVariants} className="flex items-center gap-10">
-              <span className="text-5xl font-light text-primary tracking-tight">SAR {product.price}</span>
-              <div className="h-1 lg:h-8 w-[1px] bg-white/10 hidden md:block"></div>
-              <div className="flex gap-4">
-                {['Gluten Free', 'Signature'].map(tag => (
-                  <span key={tag} className="border border-white/10 px-4 py-1.5 rounded-full text-[9px] uppercase tracking-widest text-white/30 font-bold">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
+        {/* Content & Customization Section */}
+        <section className="lg:col-span-6 space-y-8">
+          {/* Header Info */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-tertiary text-xs font-black tracking-[0.2em] uppercase">
+              <span className="w-6 h-[2px] bg-tertiary" />
+              <span>{t('details.experience')}</span>
+            </div>
 
-            <motion.p variants={itemVariants} className="text-white/60 text-xl leading-relaxed font-light max-w-lg">
-              {product.description}
-            </motion.p>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-on-surface uppercase leading-tight">
+              {getDishName(product, language)}
+            </h1>
+
+            <div className="flex items-baseline gap-4 pt-1">
+              <span className="text-3xl sm:text-4xl font-black text-primary tracking-tight">
+                {product.price} <span className="text-base font-normal text-white/50">{t('currency')}</span>
+              </span>
+              <div className="h-5 w-[1px] bg-white/10" />
+              <div className="flex gap-2">
+                <span className="border border-white/10 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-white/50">
+                  {language === 'ar' ? 'طهي طازج' : 'Freshly Prepared'}
+                </span>
+                <span className="border border-white/10 px-3 py-1 rounded-full text-[10px] uppercase font-bold text-white/50">
+                  {language === 'ar' ? 'فاخر' : 'Signature'}
+                </span>
+              </div>
+            </div>
+
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed font-light pt-2">
+              {getDishDescription(product, language)}
+            </p>
           </div>
 
-          {/* Customization Flow */}
-          <div className="space-y-20">
-            {/* Step 1: Ingredients */}
-            <motion.div variants={itemVariants} className="space-y-10">
-              <div className="flex items-center gap-6">
-                <span className="text-tertiary font-headline font-black text-2xl italic">01</span>
-                <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-white/40 underline decoration-tertiary underline-offset-8">Adjust Palette</label>
+          {/* Customization Step 1: Ingredients */}
+          {localizedIngredients.length > 0 && (
+            <div className="space-y-3 pt-4 border-t border-white/5">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white/50">
+                <span className="text-tertiary font-black">01</span>
+                <span>{t('details.customize_ingredients')}</span>
               </div>
-              <div className="flex flex-wrap gap-4">
-                {Array.isArray(product.ingredients) && product.ingredients.map((ingredient) => (
-                  <button
-                    key={ingredient}
-                    onClick={() => handleToggleIngredient(ingredient)}
-                    className={`flex items-center gap-4 px-8 py-5 rounded-xl text-xs font-bold tracking-widest group transition-all duration-300 ${
-                      selectedIngredients.includes(ingredient)
-                        ? 'bg-primary text-on-primary shadow-xl shadow-primary/10'
-                        : 'bg-white/[0.03] text-white/40 hover:text-white border border-white/5'
-                    }`}
-                  >
-                    <span className={`material-symbols-outlined text-sm ${selectedIngredients.includes(ingredient) ? 'fill-1' : ''}`}>
-                      {selectedIngredients.includes(ingredient) ? 'check_circle' : 'add_circle'}
-                    </span>
-                    <span className="uppercase">{ingredient}</span>
-                  </button>
-                ))}
-              </div>
-            </motion.div>
 
-            {/* Step 2: Special Instructions */}
-            <motion.div variants={itemVariants} className="space-y-10">
-              <div className="flex items-center gap-6">
-                <span className="text-tertiary font-headline font-black text-2xl italic">02</span>
-                <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-white/40 underline decoration-tertiary underline-offset-8">Maître d' Instructions</label>
+              <div className="flex flex-wrap gap-2.5">
+                {localizedIngredients.map((ingredient) => {
+                  const isSelected = selectedIngredients.includes(ingredient);
+                  return (
+                    <button
+                      key={ingredient}
+                      onClick={() => handleToggleIngredient(ingredient)}
+                      className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                        isSelected
+                          ? 'bg-primary text-on-primary shadow-md shadow-primary/20'
+                          : 'bg-white/5 text-white/40 hover:text-white border border-white/5'
+                      }`}
+                    >
+                      <span className="material-symbols-outlined text-sm">
+                        {isSelected ? 'check_circle' : 'add_circle'}
+                      </span>
+                      <span>{ingredient}</span>
+                    </button>
+                  );
+                })}
               </div>
-              <textarea 
-                value={instructions}
-                onChange={(e) => setInstructions(e.target.value)}
-                className="w-full bg-white/[0.01] border border-white/10 rounded-2xl p-8 text-white min-h-[160px] focus:ring-1 focus:ring-primary focus:border-primary transition-all placeholder:text-white/10 text-base font-light leading-relaxed outline-none"
-                placeholder="Ex: Medium rare, sauce on side, allergies..."
-              ></textarea>
-            </motion.div>
+            </div>
+          )}
 
-            {/* Step 3: Quantity & Complete */}
-            <motion.div variants={itemVariants} className="space-y-10 pt-8 border-t border-white/5">
-              <div className="flex flex-col sm:flex-row gap-6">
-                <div className="flex items-center bg-white/[0.03] rounded-2xl p-2 border border-white/5">
-                  <button 
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-16 h-16 flex items-center justify-center text-white/40 hover:text-primary transition-all"
-                  >
-                    <span className="material-symbols-outlined font-light">remove</span>
-                  </button>
-                  <span className="w-12 text-center font-headline font-black text-2xl tracking-tighter">{quantity}</span>
-                  <button 
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="w-16 h-16 flex items-center justify-center text-white/40 hover:text-primary transition-all"
-                  >
-                    <span className="material-symbols-outlined font-light">add</span>
-                  </button>
-                </div>
-                
+          {/* Customization Step 2: Special Instructions */}
+          <div className="space-y-2 pt-4 border-t border-white/5">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white/50">
+              <span className="text-tertiary font-black">02</span>
+              <span>{t('details.instructions_label')}</span>
+            </div>
+            <textarea 
+              value={instructions}
+              onChange={(e) => setInstructions(e.target.value)}
+              className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white text-xs leading-relaxed focus:border-primary outline-none transition-colors placeholder:text-white/20 resize-none h-24"
+              placeholder={t('details.instructions_placeholder')}
+            />
+          </div>
+
+          {/* Step 3: Quantity & Add to Cart Action */}
+          <div className="pt-4 border-t border-white/5 space-y-4">
+            <div className="flex flex-col sm:flex-row gap-4 items-stretch">
+              <div className="flex items-center justify-between sm:justify-start bg-white/5 rounded-xl border border-white/5 p-1">
                 <button 
-                  onClick={handleAddToCart}
-                  className="flex-1 bg-primary text-on-primary font-headline font-black uppercase tracking-[0.3em] py-6 rounded-2xl text-[11px] shadow-2xl transition-all duration-500 hover:brightness-110 active:scale-95 flex items-center justify-center gap-4"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="w-12 h-12 flex items-center justify-center text-white/50 hover:text-white transition-colors"
+                  aria-label="Decrease quantity"
                 >
-                  Add to Collection <span className="w-1.5 h-1.5 rounded-full bg-on-primary opacity-30"></span> SAR {(product.price * quantity).toFixed(2)}
+                  <span className="material-symbols-outlined text-base">remove</span>
+                </button>
+                <span className="w-10 text-center font-black text-lg text-white">
+                  {quantity}
+                </span>
+                <button 
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="w-12 h-12 flex items-center justify-center text-white/50 hover:text-white transition-colors"
+                  aria-label="Increase quantity"
+                >
+                  <span className="material-symbols-outlined text-base">add</span>
                 </button>
               </div>
-            </motion.div>
+              
+              <button 
+                onClick={handleAddToCart}
+                className="flex-1 bg-primary text-on-primary font-black uppercase tracking-wider py-4 px-6 rounded-xl text-xs shadow-xl shadow-primary/20 transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-3"
+              >
+                <span className="material-symbols-outlined text-base">shopping_bag</span>
+                <span>{t('details.add_to_order_action')}</span>
+                <span className="opacity-40">·</span>
+                <span>{(product.price * quantity).toFixed(0)} {t('currency')}</span>
+              </button>
+            </div>
           </div>
         </section>
       </div>
 
-      {/* Sommelier Pairing Simulation */}
-      <motion.section variants={itemVariants} className="mt-60 border-t border-white/5 pt-32">
-        <div className="flex flex-col gap-6 mb-20 text-center">
-          <span className="text-tertiary text-[10px] font-extrabold tracking-[0.5em] uppercase">The Art of Pairing</span>
-          <h2 className="text-6xl md:text-7xl font-headline font-extrabold tracking-tighter uppercase leading-none">Complete the Experience</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {pairings.map((item) => (
-            <motion.div 
-              key={item.id}
-              whileHover={{ y: -10 }}
-              className="group bg-white/[0.01] rounded-3xl overflow-hidden transition-all duration-700 hover:bg-white/[0.03] border border-white/5"
-            >
-              <div className="aspect-[3/2] overflow-hidden bg-[#121413]">
-                <img 
-                  src={item.image_url} 
-                  alt={item.name} 
-                  className="w-full h-full object-cover grayscale transition-all duration-[2000ms] group-hover:grayscale-0 group-hover:scale-110"
-                />
-              </div>
-              <div className="p-10 space-y-6">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-2xl font-bold font-headline leading-tight tracking-tight uppercase">{item.name}</h3>
+      {/* Recommended Pairings Section */}
+      {pairings.length > 0 && (
+        <section className="mt-16 md:mt-24 border-t border-white/5 pt-12 space-y-8">
+          <div className="text-center space-y-2">
+            <span className="text-tertiary text-xs font-black tracking-[0.3em] uppercase">{t('details.pairings_subtitle')}</span>
+            <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+              {t('details.pairings_title')}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {pairings.map((item) => {
+              const pairName = getDishName(item, language);
+              return (
+                <div 
+                  key={item.id}
+                  className="group bg-surface-container-low rounded-2xl overflow-hidden border border-white/5 hover:border-white/15 transition-all flex flex-col justify-between"
+                >
+                  <div className="aspect-[16/10] overflow-hidden bg-surface relative">
+                    <img 
+                      src={item.image_url} 
+                      alt={pairName} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute top-3 right-3 px-2.5 py-1 bg-surface/80 backdrop-blur-md text-primary font-black text-xs rounded-lg">
+                      {item.price} {t('currency')}
+                    </div>
+                  </div>
+
+                  <div className="p-5 space-y-4">
+                    <h3 className="text-base font-bold text-white uppercase tracking-tight leading-snug">
+                      {pairName}
+                    </h3>
+                    <button 
+                      onClick={() => {
+                        addToCart({
+                          id: item.id,
+                          name: pairName,
+                          price: item.price,
+                          image: item.image_url,
+                          quantity: 1
+                        });
+                        showNotification(`"${pairName}" ${t('menu.added_notification')}`, 'success');
+                      }}
+                      className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-primary hover:text-on-primary text-white/80 text-xs font-bold transition-all flex items-center justify-center gap-2"
+                    >
+                      <span className="material-symbols-outlined text-sm">add</span>
+                      <span>{t('details.add_pairing')}</span>
+                    </button>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-tertiary font-bold tracking-tight">SAR {item.price}</span>
-                  <button 
-                    onClick={() => {
-                      addToCart({
-                        id: item.id,
-                        name: item.name,
-                        price: item.price,
-                        image: item.image_url,
-                        quantity: 1
-                      });
-                      showNotification(`${item.name} added to your collection`, 'success');
-                    }}
-                    className="text-primary text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 group-hover:gap-4 transition-all pb-1 border-b border-primary/20"
-                  >
-                    Add Pairing <span className="material-symbols-outlined text-xs">arrow_right_alt</span>
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.section>
-    </motion.div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+    </div>
   );
 };
 

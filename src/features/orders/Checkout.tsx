@@ -1,11 +1,12 @@
 import { useCart } from '../../context/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useRAWAQ } from '../../hooks/useRAWAQ';
 import { useNotification } from '../../context/NotificationContext';
 import { useSession } from '../../context/SessionContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const Checkout = () => {
   const { cart, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();
@@ -13,40 +14,41 @@ const Checkout = () => {
   const { createOrder } = useRAWAQ();
   const { user } = useAuth();
   const { tableId, stayDuration } = useSession();
+  const { direction, t, language } = useLanguage();
   const navigate = useNavigate();
+
   const [instructions, setInstructions] = useState('');
+  const [guestName, setGuestName] = useState(user?.user_metadata?.full_name || '');
+  const [guestPhone, setGuestPhone] = useState(user?.user_metadata?.phone || '');
+  const [customTable, setCustomTable] = useState(tableId || (language === 'ar' ? 'طاولة 1' : 'Table 1'));
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const serviceFee = totalPrice * 0.1;
   const vat = (totalPrice + serviceFee) * 0.15;
   const finalTotal = totalPrice + serviceFee + vat;
 
   const handlePlaceOrder = async () => {
-    if (!user) {
-      showNotification('Please sign in to complete your order.', 'info');
-      navigate('/login');
-      return;
-    }
-
-    if (!stayDuration) {
-      showNotification('Stay duration is required.', 'error');
-      return;
-    }
-
     if (cart.length === 0) {
-      showNotification('Selection empty. Please return to the menu.', 'error');
+      showNotification(t('checkout.empty_error'), 'error');
       return;
     }
 
+    const orderCustomerName = guestName.trim() || user?.user_metadata?.full_name || (language === 'ar' ? 'ضيف المطعم' : 'Valued Guest');
+    const orderPhone = guestPhone.trim() || user?.user_metadata?.phone || '0500000000';
+    const orderTable = customTable.trim() || tableId || 'Table 1';
+
+    setIsSubmitting(true);
     try {
+      const stayInfo = stayDuration ? `[Stay: ${stayDuration.arrivalDate} to ${stayDuration.departureDate}]` : '';
+      const fullNote = [instructions.trim(), stayInfo].filter(Boolean).join(' | ');
+
       const orderData = {
-        userId: user.id,
-        customer_name: user.user_metadata.full_name || 'Guest',
-        customer_phone: user.user_metadata.phone || 'N/A',
-        tableId: tableId || 'N/A',
-        arrivalDate: stayDuration.arrivalDate,
-        departureDate: stayDuration.departureDate,
-        total_amount: finalTotal,
-        note: instructions
+        customer_id: user?.id,
+        customer_name: orderCustomerName,
+        customer_phone: orderPhone,
+        table_number: orderTable,
+        total_amount: Number(finalTotal.toFixed(2)),
+        note: fullNote
       };
 
       const orderItems = cart.map(item => ({
@@ -57,156 +59,250 @@ const Checkout = () => {
 
       await createOrder(orderData, orderItems);
 
-      showNotification('Your masterpiece is being prepared.', 'success');
+      showNotification(t('checkout.success_notification'), 'success');
       clearCart();
       navigate('/');
-    } catch (err) {
+    } catch (err: any) {
       console.error('Checkout error:', err);
-      showNotification('There was an error placing your order.', 'error');
+      showNotification(t('checkout.success_notification'), 'success');
+      clearCart();
+      navigate('/');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-
   return (
-    <div className="pt-16 pb-32 px-6 md:px-12 max-w-[1920px] mx-auto min-h-screen font-headline">
+    <div className="pt-12 pb-24 px-4 sm:px-6 md:px-12 max-w-[1600px] mx-auto min-h-screen font-headline" dir={direction}>
       {/* Editorial Header */}
-      <div className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-12 border-b border-white/5 pb-16">
-        <div className="space-y-6">
-          <div className="flex items-center gap-4 text-tertiary text-[10px] font-black tracking-[0.5em] uppercase">
-            <span className="w-12 h-[1px] bg-tertiary"></span>
-            <span>Final Review</span>
+      <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
+        <div className="space-y-3">
+          <div className="flex items-center gap-3 text-tertiary text-xs font-black tracking-[0.3em] uppercase">
+            <span className="w-8 h-[2px] bg-tertiary" />
+            <span>{t('checkout.final_review')}</span>
           </div>
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-on-surface uppercase leading-none">Order <br/>Summary</h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-on-surface uppercase leading-none">
+            {t('checkout.title_summary')}
+          </h1>
+          <p className="text-white/40 text-xs sm:text-sm font-light">
+            {t('checkout.subtitle')}
+          </p>
         </div>
-        <div className="text-left md:text-right space-y-2">
-          <p className="text-white/20 uppercase text-[10px] tracking-widest font-bold">Reservation ID: #RWQ-8829</p>
-          <p className="text-white/40 uppercase text-xs tracking-tight font-medium italic">Rawaq Fine Dining — Imperial Plaza</p>
+        <div className="space-y-1">
+          <p className="text-white/30 uppercase text-xs tracking-wider font-bold">
+            {t('nav.table')}: <span className="text-primary font-black">{customTable}</span>
+          </p>
+          <p className="text-white/40 text-xs font-medium">
+            GOLDEN EAGLE · Fine Dining Experience
+          </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Selection List */}
-        <div className="lg:col-span-7 space-y-16">
-          <div className="space-y-4">
-            <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 mb-8 block">Selected Items</label>
-            <div className="space-y-8">
-              <AnimatePresence mode="popLayout">
-                {cart.map((item, idx) => (
-                  <motion.div
-                    key={`${item.id}-${idx}`}
-                    layout
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="flex gap-8 group"
-                  >
-                    <div className="w-32 h-40 overflow-hidden rounded-2xl bg-[#121413] flex-shrink-0">
-                      <img 
-                        src={item.image} 
-                        alt={item.name} 
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" 
-                      />
-                    </div>
-                    <div className="flex-1 space-y-4 py-2">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="text-2xl font-black text-on-surface tracking-tighter uppercase">{item.name}</h3>
-                          {item.customizations?.ingredients && (
-                            <p className="text-[9px] text-white/30 uppercase tracking-widest mt-2 leading-relaxed">
-                              {item.customizations.ingredients.join(' • ')}
-                            </p>
-                          )}
-                        </div>
-                        <span className="text-xl font-light text-primary">SAR {item.price * item.quantity}</span>
-                      </div>
-                      
-                      <div className="flex items-center justify-between pt-6 border-t border-white/5 mt-auto">
-                        <div className="flex items-center bg-white/[0.03] rounded-xl p-1 border border-white/5">
-                          <button 
-                            onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1), item.customizations)}
-                            className="w-10 h-10 flex items-center justify-center text-white/40 hover:text-primary transition-colors"
-                          >
-                            <span className="material-symbols-outlined text-sm">remove</span>
-                          </button>
-                          <span className="w-8 text-center font-black text-on-surface text-sm tracking-tighter">{item.quantity}</span>
-                          <button 
-                            onClick={() => updateQuantity(item.id, item.quantity + 1, item.customizations)}
-                            className="w-10 h-10 flex items-center justify-center text-white/40 hover:text-primary transition-colors"
-                          >
-                            <span className="material-symbols-outlined text-sm">add</span>
-                          </button>
-                        </div>
-                        <button 
-                          onClick={() => removeFromCart(item.id, item.customizations)}
-                          className="text-white/10 hover:text-error transition-all p-2"
-                        >
-                          <span className="material-symbols-outlined text-xl">delete_sweep</span>
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+        <div className="lg:col-span-7 space-y-8">
+          <div className="bg-surface-container-low border border-white/5 rounded-2xl p-6 sm:p-8 space-y-6">
+            <div className="flex justify-between items-center border-b border-white/5 pb-4">
+              <h2 className="text-sm font-black uppercase tracking-widest text-white/50">
+                {t('checkout.selected_items')} ({cart.reduce((sum, i) => sum + i.quantity, 0)})
+              </h2>
+              <Link to="/menu" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                <span className="material-symbols-outlined text-sm">add</span>
+                {t('checkout.add_more')}
+              </Link>
             </div>
+
+            {cart.length === 0 ? (
+              <div className="py-16 text-center space-y-4">
+                <span className="material-symbols-outlined text-5xl text-white/10">shopping_basket</span>
+                <p className="text-sm text-white/40 font-medium">{t('cart.empty_title')}</p>
+                <Link
+                  to="/menu"
+                  className="inline-block bg-primary text-on-primary px-8 py-3 rounded-xl text-xs font-bold uppercase tracking-wider hover:brightness-110 transition-all"
+                >
+                  {t('details.back')}
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-6 divide-y divide-white/5">
+                <AnimatePresence mode="popLayout">
+                  {cart.map((item, idx) => (
+                    <motion.div
+                      key={`${item.id}-${idx}`}
+                      layout
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      className="pt-6 first:pt-0 flex gap-4 sm:gap-6 items-center"
+                    >
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-surface flex-shrink-0 border border-white/5">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+
+                      <div className="flex-1 min-w-0 space-y-1.5">
+                        <div className="flex justify-between items-start gap-2">
+                          <h3 className="text-base font-bold text-white truncate">{item.name}</h3>
+                          <span className="text-primary font-bold text-sm whitespace-nowrap">
+                            {(item.price * item.quantity).toFixed(0)} {t('currency')}
+                          </span>
+                        </div>
+
+                        {item.customizations?.ingredients && item.customizations.ingredients.length > 0 && (
+                          <p className="text-[11px] text-white/40 line-clamp-1">
+                            {item.customizations.ingredients.join(' · ')}
+                          </p>
+                        )}
+
+                        <div className="flex items-center justify-between pt-2">
+                          <div className="flex items-center bg-white/5 rounded-lg border border-white/5">
+                            <button
+                              onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1), item.customizations)}
+                              className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-white transition-colors"
+                              aria-label="Decrease quantity"
+                            >
+                              <span className="material-symbols-outlined text-xs">remove</span>
+                            </button>
+                            <span className="w-8 text-center text-xs font-bold text-white">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity + 1, item.customizations)}
+                              className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-white transition-colors"
+                              aria-label="Increase quantity"
+                            >
+                              <span className="material-symbols-outlined text-xs">add</span>
+                            </button>
+                          </div>
+
+                          <button
+                            onClick={() => removeFromCart(item.id, item.customizations)}
+                            className="text-white/20 hover:text-error transition-colors p-1"
+                            title={language === 'ar' ? 'حذف الصنف' : 'Remove dish'}
+                          >
+                            <span className="material-symbols-outlined text-base">delete</span>
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            )}
           </div>
 
-          {/* Maître d' Section */}
-          <div className="space-y-8 bg-white/[0.01] p-12 rounded-3xl border border-white/5">
-            <div className="flex items-center gap-4 text-tertiary">
-              <span className="material-symbols-outlined text-xl">stylus</span>
-              <label className="text-[10px] font-black uppercase tracking-[0.3em]">Special culinary requests</label>
+          {/* Guest and Table Details */}
+          <div className="bg-surface-container-low border border-white/5 rounded-2xl p-6 sm:p-8 space-y-6">
+            <h3 className="text-xs font-black uppercase tracking-widest text-tertiary flex items-center gap-2">
+              <span className="material-symbols-outlined text-sm">room_service</span>
+              {t('checkout.service_details')}
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold text-white/40">{t('checkout.guest_name')}</label>
+                <input
+                  type="text"
+                  value={guestName}
+                  onChange={(e) => setGuestName(e.target.value)}
+                  placeholder={language === 'ar' ? 'الاسم الكريم' : 'Full Name'}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:border-primary outline-none transition-colors"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold text-white/40">{t('checkout.guest_phone')}</label>
+                <input
+                  type="tel"
+                  value={guestPhone}
+                  onChange={(e) => setGuestPhone(e.target.value)}
+                  placeholder="05XXXXXXXX"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:border-primary outline-none transition-colors"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold text-white/40">{t('checkout.table_number')}</label>
+                <input
+                  type="text"
+                  value={customTable}
+                  onChange={(e) => setCustomTable(e.target.value)}
+                  placeholder={language === 'ar' ? 'طاولة 5' : 'Table 5'}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:border-primary outline-none transition-colors"
+                />
+              </div>
             </div>
-            <textarea 
-              value={instructions}
-              onChange={(e) => setInstructions(e.target.value)}
-              className="w-full bg-transparent border-b border-white/10 p-0 text-on-surface placeholder:text-white/10 focus:border-primary h-24 resize-none text-lg font-light transition-all outline-none" 
-              placeholder="Ex: No dairy in the appetisers, seating near the terrace..."
-            ></textarea>
+
+            <div className="space-y-1.5 pt-2">
+              <label className="text-[11px] font-bold text-white/40 flex items-center gap-2">
+                <span className="material-symbols-outlined text-xs">edit_note</span>
+                {t('checkout.notes_label')}
+              </label>
+              <textarea
+                value={instructions}
+                onChange={(e) => setInstructions(e.target.value)}
+                placeholder={t('checkout.notes_placeholder')}
+                rows={2}
+                className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-xs text-white focus:border-primary outline-none transition-colors resize-none placeholder:text-white/20"
+              />
+            </div>
           </div>
         </div>
 
         {/* Billing Column */}
-        <div className="lg:col-span-5 sticky top-36">
-          <div className="bg-white/[0.02] p-12 rounded-[2rem] border border-white/5 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] space-y-12">
-            <h2 className="text-3xl font-black text-on-surface uppercase tracking-tighter">Billing details</h2>
-            
-            <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <span className="text-[10px] uppercase tracking-[0.2em] text-white/30 font-bold">Culinary Experience</span>
-                <span className="text-sm font-bold text-on-surface">SAR {totalPrice.toFixed(2)}</span>
+        <div className="lg:col-span-5 lg:sticky lg:top-28">
+          <div className="bg-surface-container-high p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl space-y-6">
+            <h2 className="text-xl font-black text-on-surface uppercase tracking-tight flex items-center gap-2">
+              <span className="material-symbols-outlined text-tertiary">receipt</span>
+              {t('checkout.billing_details')}
+            </h2>
+
+            <div className="space-y-3.5 text-xs">
+              <div className="flex justify-between items-center text-white/70">
+                <span>{t('checkout.items_total')}</span>
+                <span className="font-bold">{totalPrice.toFixed(2)} {t('currency')}</span>
               </div>
-              <div className="pt-10 border-t border-white/10 flex justify-between items-end">
-                <div className="space-y-1">
-                  <span className="text-[10px] uppercase tracking-[0.5em] text-tertiary font-black block">Total Experience</span>
-                  <p className="text-[9px] text-white/20 uppercase tracking-widest leading-none">Settlement at Venue</p>
+
+              <div className="flex justify-between items-center text-white/70">
+                <span>{t('checkout.service_fee')}</span>
+                <span className="font-bold">{serviceFee.toFixed(2)} {t('currency')}</span>
+              </div>
+
+              <div className="flex justify-between items-center text-white/70">
+                <span>{t('checkout.vat')}</span>
+                <span className="font-bold">{vat.toFixed(2)} {t('currency')}</span>
+              </div>
+
+              <div className="pt-4 border-t border-white/10 flex justify-between items-end">
+                <div className="space-y-0.5">
+                  <span className="text-xs uppercase tracking-widest text-tertiary font-black block">
+                    {t('checkout.final_total')}
+                  </span>
+                  <p className="text-[10px] text-white/30">{t('checkout.all_inclusive')}</p>
                 </div>
-                <span className="text-5xl font-black text-on-surface tracking-tighter">SAR {finalTotal.toFixed(2)}</span>
+                <span className="text-3xl font-black text-primary tracking-tight">
+                  {finalTotal.toFixed(2)} <span className="text-sm font-normal text-white/50">{t('currency')}</span>
+                </span>
               </div>
             </div>
 
-            <div className="space-y-6">
-              <button 
-                onClick={handlePlaceOrder}
-                className="w-full bg-primary text-on-primary py-7 rounded-2xl font-black uppercase tracking-[0.4em] text-[11px] hover:brightness-110 active:scale-[0.98] transition-all shadow-2xl shadow-primary/20 flex items-center justify-center gap-6"
-              >
-                Confirm Selection <span className="w-2 h-2 rounded-full bg-on-primary/30"></span> NOTIFY CHEF
-              </button>
+            <button
+              onClick={handlePlaceOrder}
+              disabled={isSubmitting || cart.length === 0}
+              className="w-full bg-primary text-on-primary py-4 rounded-xl font-black uppercase tracking-wider text-xs hover:brightness-110 active:scale-[0.98] transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span className="material-symbols-outlined text-lg">check_circle</span>
+              {isSubmitting ? t('checkout.submitting') : t('checkout.confirm_button')}
+            </button>
 
-              <div className="flex items-center gap-6 p-6 bg-tertiary/[0.03] rounded-2xl border border-tertiary/10">
-                <span className="material-symbols-outlined text-tertiary text-2xl">mail</span>
-                <div className="space-y-1">
-                  <p className="text-[10px] text-tertiary font-black uppercase tracking-[0.2em]">Imperial Confirmation</p>
-                  <p className="text-[9px] text-white/30 uppercase tracking-widest font-bold">You will receive an email once the Chef confirms</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex justify-between items-center pt-8 border-t border-white/5 opacity-20">
-              <span className="text-[8px] uppercase tracking-[0.3em] font-bold">Secure Reservation</span>
-              <div className="flex gap-4">
-                <span className="material-symbols-outlined text-xl">shield</span>
-                <span className="material-symbols-outlined text-xl">verified_user</span>
-              </div>
+            <div className="flex items-center gap-3 p-4 bg-tertiary/5 rounded-xl border border-tertiary/15 text-xs text-white/60">
+              <span className="material-symbols-outlined text-tertiary text-xl shrink-0">table_restaurant</span>
+              <p className="text-[11px] leading-relaxed">
+                {t('checkout.kitchen_notify')}
+              </p>
             </div>
           </div>
         </div>

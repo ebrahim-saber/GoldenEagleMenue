@@ -10,6 +10,7 @@ import Checkout from './features/orders/Checkout';
 import Reservations from './pages/Reservations';
 import PrivateDining from './pages/PrivateDining';
 import Gallery from './pages/Gallery';
+import OurStory from './pages/OurStory';
 
 // Auth Pages
 import Login from './features/auth/Login';
@@ -50,6 +51,7 @@ const AnimatedRoutes = () => {
 
         <Route path="/private-dining" element={<CustomerLayout><PrivateDining /></CustomerLayout>} />
         <Route path="/gallery" element={<CustomerLayout><Gallery /></CustomerLayout>} />
+        <Route path="/our-story" element={<CustomerLayout><OurStory /></CustomerLayout>} />
         
         {/* Auth Routes */}
         <Route path="/login" element={<CustomerLayout><Login /></CustomerLayout>} />
@@ -99,21 +101,25 @@ const AnimatedRoutes = () => {
   );
 };
 
+import { LanguageProvider } from './context/LanguageContext';
+
 function App() {
   return (
-    <AuthProvider>
-      <NotificationProvider>
-        <CartProvider>
-          <Router>
-            <SessionProvider>
-              <ScrollToTop />
-              <StayDurationModal />
-              <AnimatedRoutes />
-            </SessionProvider>
-          </Router>
-        </CartProvider>
-      </NotificationProvider>
-    </AuthProvider>
+    <LanguageProvider>
+      <AuthProvider>
+        <NotificationProvider>
+          <CartProvider>
+            <Router>
+              <SessionProvider>
+                <ScrollToTop />
+                <StayDurationModal />
+                <AnimatedRoutes />
+              </SessionProvider>
+            </Router>
+          </CartProvider>
+        </NotificationProvider>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 

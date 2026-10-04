@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Inter:wght@400;500;600&family=Cinzel:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Manrope:wght@200;300;400;500;600;700;800&family=Inter:wght@400;500;600&family=Cinzel:wght@400;700&display=swap');
 
 @theme {
   --color-primary: #9cd2b5;
@@ -22,12 +22,12 @@
   --color-on-error: #690005;
 
   --color-surface-container-low: #1a1c1b;
-  --color-surface-container-high: #282a29;
-  --color-surface-container-highest: #333534;
+  --color-surface-container-high: #242625;
+  --color-surface-container-highest: #2f3230;
   
-  --font-headline: "Manrope", sans-serif;
-  --font-body: "Manrope", sans-serif;
-  --font-label: "Inter", sans-serif;
+  --font-headline: "Cairo", "Manrope", sans-serif;
+  --font-body: "Cairo", "Manrope", sans-serif;
+  --font-label: "Inter", "Cairo", sans-serif;
 
   --radius-xl: 0.5rem;
   --radius-2xl: 1rem;
@@ -62,7 +62,7 @@
   .rawa-btn {
     padding: 0.75rem 2rem;
     border-radius: 0.5rem;
-    font-family: "Manrope", sans-serif;
+    font-family: "Cairo", "Manrope", sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
